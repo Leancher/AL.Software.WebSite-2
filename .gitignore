@@ -6,6 +6,7 @@ HistCher
 ThingUSSR/
 Thing90/
 *.lnk
+*.cmd
 
 # User-specific files
 *.suo

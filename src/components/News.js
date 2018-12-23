@@ -22,8 +22,8 @@ class News extends React.Component {
         let newsTemplate = null;
         if (filteredNews.length) {
             newsTemplate = filteredNews.map(function(item) {
-            if (item.bigText.indexOf('pubg') !== -1) item.bigText = 'Spam'
-            return <Article key={item.id} data={item} />;
+                if (item.bigText.indexOf('pubg') !== -1) item.bigText = 'Spam'
+                return <Article key={item.id} data={item} />;
             });
         } else {
             newsTemplate = <p>К сожалению новостей нет</p>;
