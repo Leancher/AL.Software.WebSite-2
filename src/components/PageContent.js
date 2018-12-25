@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
 class PageContent extends React.Component {
   state = {
-    location: window.location,
-  }
+    location: window.location
+  };
   renderMenuList() {
-    return this.props.category.map(element => <a href="#element">{element}</a>)
+    return this.props.category.map(element => (
+      <a href={window.location.origin + "/" + element}>{element}</a>
+    ));
   }
 
   render() {
@@ -24,8 +26,8 @@ class PageContent extends React.Component {
           <p id="ErrorMessage">Error</p>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export { PageContent }
+export { PageContent };
