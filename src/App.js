@@ -69,14 +69,14 @@ class App extends React.Component {
       <React.Fragment>
         {this.renderHeader()}
         <div className="Body">
-          {"hash: " + window.location.hash} <br />
+          {/*           {"hash: " + window.location.hash} <br />
           {"host: " + window.location.host} <br />
           {"href: " + window.location.href} <br />
           {"origin: " + window.location.origin} <br />
           {"pathname: " + window.location.pathname} <br />
           {"port: " + window.location.port} <br />
           {"protocol: " + window.location.protocol} <br />
-          {"search: " + window.location.search} <br />
+          {"search: " + window.location.search} <br /> */}
           {this.selectRenderPage()}
         </div>
 
