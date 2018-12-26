@@ -1,13 +1,13 @@
-import React from "react"; // подключение библиотеки React
+import React from "react";
 //import ReactDOM from "react-dom";
-import "./App.css"; // подключение файла стилей
+import "./App.css";
 import { PageMain } from "./components/PageMain";
-//import { PageContent } from "./components/PageContent";
-import { config } from "./components/config";
+import { PageContent } from "./components/PageContent";
+import { config, getCategory } from "./components/utilites";
 
 class App extends React.Component {
   state = {
-    category: [
+    categories: [
       "Main",
       "MyProjects",
       "RepairCar",
@@ -17,8 +17,6 @@ class App extends React.Component {
       "HistCher",
       "MyNotes"
     ]
-    //news: null,
-    //isLoading: false
   };
   handleAddNews = data => {
     //const nextNews = [data, ...this.state.news];
@@ -36,38 +34,40 @@ class App extends React.Component {
         }, 1000)
     }) */
   }
-  getCategory() {
-    let category = window.location.search;
-    if (category === "") category = "Main";
-    return category;
-  }
+
   selectRenderPage() {
-    if (this.getCategory() === "Main") {
-      return <PageMain category={this.state.category} />;
+    if (getCategory() === "Main") {
+      return <PageMain category={this.state.categories} />;
     }
+    return <PageContent category={this.state.categories} />;
   }
+
+  renderHeader() {
+    return (
+      <div className="header">
+        <div className="HeaderTitle">
+          <a href={config.defaultPage}>
+            <img src={"./Pictures/Logo/" + getCategory() + ".png"} alt="alt" />
+            LEANCHER
+          </a>
+        </div>
+        <div className="HeaderMenu">
+          <a href="#linkStat" className="HeaderMenuItem">
+            Статистика
+          </a>
+          <br />
+          <a href="#linkAbout" className="HeaderMenuItem">
+            О сайте
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    //const { news, isLoading } = this.state
     return (
       <React.Fragment>
-        <div className="header">
-          <div className="HeaderTitle">
-            <a href={config.defaultPage}>
-              <img src="./Pictures/Logo/Main.png" alt="alt" />
-              {/* <asp:Image ID="LogoPic" runat="server" /> */}
-              LEANCHER
-            </a>
-          </div>
-          <div className="HeaderMenu">
-            <a href="#linkStat" className="HeaderMenuItem">
-              Статистика
-            </a>
-            <br />
-            <a href="#linkAbout" className="HeaderMenuItem">
-              О сайте
-            </a>
-          </div>
-        </div>
+        {this.renderHeader()}
         <div className="Body">
           {"hash: " + window.location.hash} <br />
           {"host: " + window.location.host} <br />
