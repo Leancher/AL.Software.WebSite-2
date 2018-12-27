@@ -1,4 +1,5 @@
 import React from "react";
+import "webpack-runtime-require";
 //import ReactDOM from "react-dom";
 import "./App.css";
 import { PageMain } from "./components/PageMain";
@@ -63,23 +64,30 @@ class App extends React.Component {
       </div>
     );
   }
+  connectDB(){
+    const sqlite3 = require('sqlite3').verbose();
 
+    let db = new sqlite3.Database('./Database.db', (err) => {
+      if (err) {
+        console.error('Error open: ' + err.message);
+      }
+      console.log('Connected to my database.');
+    });
+    db.close((err) => {
+      if (err) {
+        console.error('Error close: ' + err.message);
+      }
+      console.log('Close the database connection.');
+    });
+  }
   render() {
     return (
       <React.Fragment>
         {this.renderHeader()}
         <div className="Body">
-          {/*           {"hash: " + window.location.hash} <br />
-          {"host: " + window.location.host} <br />
-          {"href: " + window.location.href} <br />
-          {"origin: " + window.location.origin} <br />
-          {"pathname: " + window.location.pathname} <br />
-          {"port: " + window.location.port} <br />
-          {"protocol: " + window.location.protocol} <br />
-          {"search: " + window.location.search} <br /> */}
           {this.selectRenderPage()}
         </div>
-
+        {this.connectDB()}
         {/*         <Add onAddNews={this.handleAddNews} />
         <h3>Новости</h3>
         {isLoading && <p>Загружаю...</p>}
