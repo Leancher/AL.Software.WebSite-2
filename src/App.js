@@ -1,23 +1,23 @@
-import React from "react";
-import "webpack-runtime-require";
+import React from 'react';
 //import ReactDOM from "react-dom";
-import "./App.css";
-import { PageMain } from "./components/PageMain";
-import { PageContent } from "./components/PageContent";
-import { config, getCategory } from "./components/utilites";
+import './App.css';
+import { PageMain } from './components/PageMain';
+import { PageContent } from './components/PageContent';
+import { config, getCategory, getCategoryList } from './components/utilites';
 
 class App extends React.Component {
   state = {
     categories: [
-      "Main",
-      "MyProjects",
-      "RepairCar",
-      "MyPhoto",
-      "ThingUSSR",
-      "Thing90",
-      "HistCher",
-      "MyNotes"
-    ]
+      'Main',
+      'MyProjects',
+      'RepairCar',
+      'MyPhoto',
+      'ThingUSSR',
+      'Thing90',
+      'HistCher',
+      'MyNotes'
+    ],
+    listCats: ''
   };
   handleAddNews = data => {
     //const nextNews = [data, ...this.state.news];
@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 
   selectRenderPage() {
-    if (getCategory() === "Main") {
+    if (getCategory() === 'Main') {
       return <PageMain category={this.state.categories} />;
     }
     return <PageContent category={this.state.categories} />;
@@ -48,7 +48,7 @@ class App extends React.Component {
       <div className="header">
         <div className="HeaderTitle">
           <a href={config.defaultPage}>
-            <img src={"./Pictures/Logo/" + getCategory() + ".png"} alt="alt" />
+            <img src={'./Pictures/Logo/' + getCategory() + '.png'} alt="alt" />
             LEANCHER
           </a>
         </div>
@@ -64,30 +64,22 @@ class App extends React.Component {
       </div>
     );
   }
-  connectDB(){
-    const sqlite3 = require('sqlite3').verbose();
 
-    let db = new sqlite3.Database('./Database.db', (err) => {
-      if (err) {
-        console.error('Error open: ' + err.message);
-      }
-      console.log('Connected to my database.');
-    });
-    db.close((err) => {
-      if (err) {
-        console.error('Error close: ' + err.message);
-      }
-      console.log('Close the database connection.');
-    });
-  }
+  changeCats = cats => {
+    this.setState({ listCats: cats });
+    //console.log('listCats: ' + this.state.listCats);
+  };
+
   render() {
+    getCategoryList(this.changeCats);
     return (
       <React.Fragment>
         {this.renderHeader()}
-        <div className="Body">
-          {this.selectRenderPage()}
-        </div>
-        {this.connectDB()}
+
+        {/*         {this.state.listCats === ''
+          ? console.log('listCats: ' + this.state.listCats)
+          : console.log('listCats nothing')} */}
+        <div className="Body">{this.selectRenderPage()}</div>
         {/*         <Add onAddNews={this.handleAddNews} />
         <h3>Новости</h3>
         {isLoading && <p>Загружаю...</p>}
