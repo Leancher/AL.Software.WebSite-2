@@ -3,52 +3,39 @@ import React from 'react';
 import './App.css';
 import { PageMain } from './components/PageMain';
 import { PageContent } from './components/PageContent';
-import { config, getCategory, getCategoryList } from './components/utilites';
+import {
+  config,
+  getCategoryNumber,
+  getCategoryList,
+  getSubCatNumber
+} from './components/utilites';
 
 class App extends React.Component {
-  state = {
-    categories: [
-      'Main',
-      'MyProjects',
-      'RepairCar',
-      'MyPhoto',
-      'ThingUSSR',
-      'Thing90',
-      'HistCher',
-      'MyNotes'
-    ],
-    listCats: ''
-  };
-  handleAddNews = data => {
-    //const nextNews = [data, ...this.state.news];
-    //this.setState({ news: nextNews });
-  };
-  componentDidMount() {
-    /*     this.setState({isLoading: true})
-    fetch('http://localhost:3000/data/newsData.json')
-    .then(response => {
-      return response.json()
-    })
-    .then(data => {
-      setTimeout(() => { // добавили задержку
-        this.setState({ isLoading: false, news: data })
-        }, 1000)
-    }) */
+  constructor(props) {
+    super(props);
+    this.numCat = 0;
   }
+  state = {
+    categories: []
+  };
 
   selectRenderPage() {
-    if (getCategory() === 'Main') {
+    if (Number(this.numCat) === 0) {
       return <PageMain category={this.state.categories} />;
     }
     return <PageContent category={this.state.categories} />;
   }
 
   renderHeader() {
+    const { categories } = this.state;
     return (
       <div className="header">
         <div className="HeaderTitle">
           <a href={config.defaultPage}>
-            <img src={'./Pictures/Logo/' + getCategory() + '.png'} alt="alt" />
+            <img
+              src={'./Pictures/Logo/' + categories[this.numCat][0] + '.png'}
+              alt="alt"
+            />
             LEANCHER
           </a>
         </div>
@@ -65,25 +52,28 @@ class App extends React.Component {
     );
   }
 
-  changeCats = cats => {
-    this.setState({ listCats: cats });
-    //console.log('listCats: ' + this.state.listCats);
-  };
-
-  render() {
-    getCategoryList(this.changeCats);
+  renderPage() {
+    this.numCat = getCategoryNumber();
+    getSubCatNumber();
     return (
       <React.Fragment>
         {this.renderHeader()}
-
-        {/*         {this.state.listCats === ''
-          ? console.log('listCats: ' + this.state.listCats)
-          : console.log('listCats nothing')} */}
         <div className="Body">{this.selectRenderPage()}</div>
-        {/*         <Add onAddNews={this.handleAddNews} />
-        <h3>Новости</h3>
-        {isLoading && <p>Загружаю...</p>}
-        {Array.isArray(news) ? <News data = {news} /> : <p>Нет новостей</p>} */}
+      </React.Fragment>
+    );
+  }
+
+  setCatsList = catsList => {
+    this.setState({ categories: catsList });
+    return this.renderPage();
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        {this.state.categories.length === 0
+          ? getCategoryList(this.setCatsList)
+          : this.renderPage()}
       </React.Fragment>
     );
   }

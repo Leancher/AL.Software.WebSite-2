@@ -1,19 +1,19 @@
-import React from "react";
-import { buildLink } from "./utilites";
+import React from 'react';
+import { buildLink } from './utilites';
 
 class PageMain extends React.Component {
   state = {};
 
   renderCategoryGrid() {
     return this.props.category.map((element, index) => {
-      if (index === 0) return "";
+      if (index === 0) return '';
       return (
         <div key={index} className="TileCell">
-          <a href={buildLink(element)}>
+          <a href={buildLink(index, '')}>
             <div className="TileCellPic">
-              <img src={"./Pictures/Main/" + element + ".png"} alt="alt" />
+              <img src={'./Pictures/Main/' + element[0] + '.png'} alt="alt" />
             </div>
-            <div className="TileCellCaption">{element}</div>
+            <div className="TileCellCaption">{element[1]}</div>
           </a>
         </div>
       );
@@ -23,7 +23,7 @@ class PageMain extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <img src="./Pictures/Main/background.jpg" alt="background.jpg" width="100%" />
+        <img src="./Pictures/Main/background.jpg" alt="background" width="100%" />
         <div className="TileGrid">{this.renderCategoryGrid()}</div>
       </React.Fragment>
     );

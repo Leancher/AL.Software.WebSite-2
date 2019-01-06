@@ -1,6 +1,7 @@
 node_modules/
 
 #My ignore
+public/Pictures/
 MyPhoto/
 HistCher
 ThingUSSR/

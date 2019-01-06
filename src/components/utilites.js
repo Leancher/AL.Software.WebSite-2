@@ -1,19 +1,32 @@
 export const config = {
-  defaultPage: '/index.html'
+  defaultPage: '/index.html',
+  serverUrl: 'http://localhost:53492/Page/RequestProcessor.aspx'
 };
 
-export const buildLink = item =>
-  window.location.origin + config.defaultPage + '?category=' + item;
+export const buildLink = (item, id) =>
+  window.location.origin +
+  config.defaultPage +
+  '?category=' +
+  item +
+  (id !== '' ? '&id=' + id : '');
 
-function parseQStr(qString) {
-  const pair = require('url').parse(qString, { parseQueryString: true }).query;
+export const getCategoryNumber = () => {
+  const pair = require('url').parse(window.location.search, { parseQueryString: true })
+    .query;
   const key = Object.keys(pair);
-  if (key.length === 0) return 'Main';
+  if (key.length === 0) return 0;
   return pair[key[0]];
+};
+
+export function getSubCatNumber() {
+  const pair = require('url').parse(window.location.search, { parseQueryString: true })
+    .query;
+  const key = Object.keys(pair);
+  if (!key[1]) return 0;
+  return pair[key[1]];
 }
 
-function httpGet(command = 'Categories') {
-  const url = 'http://localhost:53492/Page/RequestProcessor.aspx?Command=' + command;
+function httpGet(url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -23,15 +36,30 @@ function httpGet(command = 'Categories') {
   });
 }
 
-export function getCategoryList(func) {
-  httpGet('Categories').then(response => {
-    //console.log('getCategoryList: ' + response);
-    func(response);
+const parseString = string => string.split('&').map(item => item.split(';'));
+
+const serverRequest = (command, catID = '', albumID = '') =>
+  httpGet(
+    config.serverUrl + '?Command=' + command + '&catID=' + catID + '&albumID=' + albumID
+  );
+
+export function getCategoryList(responseHandler) {
+  serverRequest('getCategoryList').then(response => {
+    responseHandler(parseString(response));
     return;
   });
 }
 
-export function getCategory() {
-  const category = parseQStr(window.location.search);
-  return category;
+export function getCurrentCategory(responseHandler, catID) {
+  serverRequest('getCurrentCategory', catID).then(response => {
+    responseHandler(parseString(response));
+    return;
+  });
+}
+
+export function getPhotosList(responseHandler, catID, albumID) {
+  serverRequest('getPhotosList', catID, albumID).then(response => {
+    responseHandler(parseString(response));
+    return;
+  });
 }
