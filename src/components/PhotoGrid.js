@@ -1,7 +1,7 @@
 import React from 'react';
 import { getPhotosList } from './utilites';
 
-class PhotoViewer extends React.Component {
+export class PhotoGrid extends React.Component {
   constructor(props) {
     super(props);
     this.ArrowLEn = './Pictures/Util/ArrowLEn.png';
@@ -10,17 +10,31 @@ class PhotoViewer extends React.Component {
     this.ArrowRDis = './Pictures/Util/ArrowRDis.png';
   }
   state = {
-    photosList: []
+    photosList: ''
   };
   renderPhotoGrid() {
-    return;
+    const { nameCat, numSubCat } = this.props;
+    if (this.state.photosList === '') return 'В этом альбоме нет картинок';
+
+    return this.state.photosList.map((item, index) => {
+      return (
+        <div className="PhotoCell" key={index}>
+          <img
+            id="photo"
+            src={'./Pictures/' + nameCat + '/Album' + numSubCat + 'Preview/' + item}
+            alt={item}
+            style={{ cursor: 'pointer' }}
+            name={item}
+          />
+        </div>
+      );
+    });
   }
 
-  setPhotosList(response) {
-    console.log(response);
+  setPhotosList = response => {
     this.setState({ photosList: response });
     return this.renderPhotoGrid();
-  }
+  };
 
   setEnablePic = e => {
     if (e.target.id === 'BtPrev') e.target.src = this.ArrowLEn;
@@ -33,7 +47,10 @@ class PhotoViewer extends React.Component {
   };
 
   clickButton = e => {
-    console.log(e.target);
+    const id = e.target.id;
+    if (e.target.id === 'BtPrev') console.log(e.target);
+    if (e.target.id === 'BtNext') console.log(e.target);
+    if (e.target.id === 'photo') console.log(e.target.name);
   };
 
   render() {
@@ -45,12 +62,11 @@ class PhotoViewer extends React.Component {
           onMouseOut={this.setDisablePic}
           onClick={this.clickButton}
         >
-          <div className="Button">
+          {/*           <div className="Button" style={{ display: 'flex' }}>
             <img id="BtPrev" src={this.ArrowLDis} alt="BtPrev" />
-          </div>
+          </div> */}
 
           <div id="Content" className="PhotoPlace">
-            <div>Photoplace</div>
             {this.state.photosList.length === 0
               ? getPhotosList(
                   this.setPhotosList,
@@ -60,13 +76,11 @@ class PhotoViewer extends React.Component {
               : this.renderPhotoGrid()}
           </div>
 
-          <div className="Button">
+          {/*           <div className="Button" style={{ display: 'flex' }}>
             <img id="BtNext" src={this.ArrowRDis} alt="BtNext" />
-          </div>
+          </div> */}
         </div>
       </React.Fragment>
     );
   }
 }
-
-export { PhotoViewer };

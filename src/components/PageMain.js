@@ -1,9 +1,7 @@
 import React from 'react';
 import { buildLink } from './utilites';
 
-class PageMain extends React.Component {
-  state = {};
-
+export class PageMain extends React.Component {
   renderCategoryGrid() {
     return this.props.category.map((element, index) => {
       if (index === 0) return '';
@@ -29,5 +27,3 @@ class PageMain extends React.Component {
     );
   }
 }
-
-export { PageMain };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryTileGrid } from './CategoryTileGrid';
-import { PhotoViewer } from './PhotoViewer';
+import { PhotoGrid } from './PhotoGrid';
 import {
   buildLink,
   getCategoryNumber,
@@ -34,18 +34,21 @@ class PageContent extends React.Component {
   }
 
   selectRenderContent() {
+    const nameCat = this.props.category[this.numCat][0];
     if (this.numSubCat === 0) {
       return (
         <CategoryTileGrid
           category={this.state.curCategory}
-          nameCat={this.props.category[this.numCat][0]}
+          nameCat={nameCat}
           numberCat={this.numCat}
         />
       );
     }
     //isPhotoAlbum
     if (this.state.curCategory[this.numSubCat][1] === '1') {
-      return <PhotoViewer numberCat={this.numCat} numSubCat={this.numSubCat} />;
+      return (
+        <PhotoGrid numberCat={this.numCat} numSubCat={this.numSubCat} nameCat={nameCat} />
+      );
     }
   }
 

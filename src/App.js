@@ -19,13 +19,6 @@ class App extends React.Component {
     categories: []
   };
 
-  selectRenderPage() {
-    if (Number(this.numCat) === 0) {
-      return <PageMain category={this.state.categories} />;
-    }
-    return <PageContent category={this.state.categories} />;
-  }
-
   renderHeader() {
     const { categories } = this.state;
     return (
@@ -50,6 +43,13 @@ class App extends React.Component {
         </div>
       </div>
     );
+  }
+
+  selectRenderPage() {
+    if (Number(this.numCat) === 0) {
+      return <PageMain category={this.state.categories} />;
+    }
+    return <PageContent category={this.state.categories} />;
   }
 
   renderPage() {

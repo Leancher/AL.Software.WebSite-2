@@ -85,28 +85,17 @@ Partial Class Page_PhotoProcessor
         Database.DatabaseOpen()
         CategoryID = Val(CategoryID) + 1
         Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CategoryID, "Name")
-        Dim ResponseString As String = ""
-        'Dim Index As Integer = 0
         Dim Path As String = Config.GetAppPath() + "\public\Pictures\" + NameCategory + "\Album" + AlbumID + "Preview"
-        'Dim CountCategory = Database.GetCountItem(NameCategory)
         Try
             Dim ListPhoto As String() = Directory.GetFiles(Path)
-            'Удаление полного пути к рисункам, рисунок с полным путем не загружается
             For i = 0 To ListPhoto.Length - 1
                 Dim FileInfo As New FileInfo(Path)
                 ListPhoto(i) = IO.Path.GetFileName(ListPhoto(i))
             Next i
-            'For Each CurrentPhoto In ListPhoto
-            'Dim FileInfo As New FileInfo(Path)
-            'ListPhoto(Index) = IO.Path.GetFileName(CurrentPhoto)
-            'Index = Index + 1
-            'Next
-            ResponseString = String.Join("&", ListPhoto)
+            Return String.Join("&", ListPhoto)
         Catch ex As Exception
-
+            Return ""
         End Try
-        'Index = 0
-        Return ResponseString
     End Function
     Private Function GetDescFromDB() As String
         Dim ResponseString As String = ""

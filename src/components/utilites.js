@@ -3,11 +3,11 @@ export const config = {
   serverUrl: 'http://localhost:53492/Page/RequestProcessor.aspx'
 };
 
-export const buildLink = (item, id) =>
+export const buildLink = (catID, id) =>
   window.location.origin +
   config.defaultPage +
   '?category=' +
-  item +
+  catID +
   (id !== '' ? '&id=' + id : '');
 
 export const getCategoryNumber = () => {
@@ -36,7 +36,8 @@ function httpGet(url) {
   });
 }
 
-const parseString = string => string.split('&').map(item => item.split(';'));
+const parseCompositeString = string => string.split('&').map(item => item.split(';'));
+const parseSimpleString = string => string.split('&');
 
 const serverRequest = (command, catID = '', albumID = '') =>
   httpGet(
@@ -45,21 +46,21 @@ const serverRequest = (command, catID = '', albumID = '') =>
 
 export function getCategoryList(responseHandler) {
   serverRequest('getCategoryList').then(response => {
-    responseHandler(parseString(response));
+    responseHandler(parseCompositeString(response));
     return;
   });
 }
 
 export function getCurrentCategory(responseHandler, catID) {
   serverRequest('getCurrentCategory', catID).then(response => {
-    responseHandler(parseString(response));
+    responseHandler(parseCompositeString(response));
     return;
   });
 }
 
 export function getPhotosList(responseHandler, catID, albumID) {
   serverRequest('getPhotosList', catID, albumID).then(response => {
-    responseHandler(parseString(response));
+    responseHandler(parseSimpleString(response));
     return;
   });
 }
