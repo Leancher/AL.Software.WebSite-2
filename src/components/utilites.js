@@ -44,14 +44,14 @@ const serverRequest = (command, catID = '', albumID = '') =>
     config.serverUrl + '?Command=' + command + '&catID=' + catID + '&albumID=' + albumID
   );
 
-export function getCategoryList(responseHandler) {
-  serverRequest('getCategoryList').then(response => {
+export function getCategoriesList(responseHandler) {
+  serverRequest('getCategoriesList').then(response => {
     responseHandler(parseCompositeString(response));
     return;
   });
 }
 
-export function getCurrentCategory(responseHandler, catID) {
+export function getsubCategoriesList(responseHandler, catID) {
   serverRequest('getCurrentCategory', catID).then(response => {
     responseHandler(parseCompositeString(response));
     return;

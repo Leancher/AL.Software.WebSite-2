@@ -2,81 +2,84 @@ import React from 'react';
 //import ReactDOM from "react-dom";
 import './App.css';
 import { PageMain } from './components/PageMain';
-import { PageContent } from './components/PageContent';
+import { NavMenu } from './components/NavMenu';
+import { Header } from './components/Header';
+import { CurrentCategory } from './components/CurrentCategory';
 import {
-  config,
   getCategoryNumber,
-  getCategoryList,
-  getSubCatNumber
+  getCategoriesList,
+  getSubCatNumber,
+  getsubCategoriesList
 } from './components/utilites';
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.numCat = 0;
+    this.catName = 0;
+    this.catNum = 0;
+    this.subCatNum = 0;
   }
   state = {
-    categories: []
+    categoriesList: [],
+    subCategoriesList: []
   };
 
-  renderHeader() {
-    const { categories } = this.state;
-    return (
-      <div className="header">
-        <div className="HeaderTitle">
-          <a href={config.defaultPage}>
-            <img
-              src={'./Pictures/Logo/' + categories[this.numCat][0] + '.png'}
-              alt="alt"
-            />
-            LEANCHER
-          </a>
-        </div>
-        <div className="HeaderMenu">
-          <a href="#linkStat" className="HeaderMenuItem">
-            Статистика
-          </a>
-          <br />
-          <a href="#linkAbout" className="HeaderMenuItem">
-            О сайте
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  selectRenderPage() {
-    if (Number(this.numCat) === 0) {
-      return <PageMain category={this.state.categories} />;
+  selectContent() {
+    if (Number(this.catNum) === 0) {
+      return <PageMain categoriesList={this.state.categoriesList} />;
     }
-    return <PageContent category={this.state.categories} />;
+    if (Number(this.catNum) > 0) {
+      return (
+        <React.Fragment>
+          <NavMenu category={this.state.categoriesList} />
+          <CurrentCategory
+            subCategories={this.state.subCategoriesList}
+            category={this.state.categoriesList[this.catNum]}
+            catNum={this.catNum}
+          />
+        </React.Fragment>
+      );
+    }
+    if (Number(this.subCatNum) === 0) {
+    }
+
+    //return <PageContent category={this.state.categoriesList} />;
   }
 
-  renderPage() {
-    this.numCat = getCategoryNumber();
-    getSubCatNumber();
+  renderMainContainer() {
+    this.catName = this.state.categoriesList[this.catNum][0];
     return (
       <React.Fragment>
-        {this.renderHeader()}
-        <div className="Body">{this.selectRenderPage()}</div>
+        <Header catName={this.catName} />
+        <div className="Body">{this.selectContent()}</div>
       </React.Fragment>
     );
   }
 
-  setCatsList = catsList => {
-    this.setState({ categories: catsList });
-    return this.renderPage();
-  };
+  setCatsList = categoriesList => this.setState({ categoriesList: [...categoriesList] });
+
+  setSubCatsList = subCategoriesList =>
+    this.setState({ subCategoriesList: [...subCategoriesList] });
+
+  requestData() {
+    if (this.state.categoriesList.length === 0) {
+      getCategoriesList(this.setCatsList);
+    }
+    if (this.subCatNum === 0) return;
+    if (this.state.subCategoriesList.length === 0) {
+      getsubCategoriesList(this.setSubCatsList, this.subCatNum);
+    }
+  }
 
   render() {
+    this.catNum = getCategoryNumber();
+    this.subCatNum = getSubCatNumber();
+    const len1 = this.state.categoriesList.length;
+    //const len2 = this.state.subCategoriesList.length;
     return (
       <React.Fragment>
-        {this.state.categories.length === 0
-          ? getCategoryList(this.setCatsList)
-          : this.renderPage()}
+        {len1 > 0 ? this.renderMainContainer() : this.requestData()}
       </React.Fragment>
     );
   }
 }
-
-export default App;

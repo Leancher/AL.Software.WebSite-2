@@ -47,7 +47,7 @@ export class PhotoGrid extends React.Component {
   };
 
   clickButton = e => {
-    const id = e.target.id;
+    //const id = e.target.id;
     if (e.target.id === 'BtPrev') console.log(e.target);
     if (e.target.id === 'BtNext') console.log(e.target);
     if (e.target.id === 'photo') console.log(e.target.name);

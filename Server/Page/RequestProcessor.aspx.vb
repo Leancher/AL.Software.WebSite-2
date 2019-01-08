@@ -15,7 +15,7 @@ Partial Class Page_PhotoProcessor
         AlbumID = Request.QueryString("albumID")
         'Category = Request.QueryString("Category")
         Dim ResponseString As String = ""
-        If Command = "getCategoryList" Then ResponseString = GetListCategories()
+        If Command = "getCategoriesList" Then ResponseString = GetCategoriesList()
         If Command = "getCurrentCategory" Then ResponseString = GetCategory()
         If Command = "getPhotosList" Then ResponseString = GetPhotosList()
         If Command = "DescriptionPhoto" Then ResponseString = GetDataFromExif()
@@ -40,7 +40,7 @@ Partial Class Page_PhotoProcessor
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)
     End Function
-    Private Function GetListCategories() As String
+    Private Function GetCategoriesList() As String
         Database.DatabaseOpen()
         Dim CountCategory = Database.GetCountItem(Config.CategoryTable)
         Dim ArrayCats(CountCategory - 1) As String

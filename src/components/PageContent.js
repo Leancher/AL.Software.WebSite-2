@@ -1,12 +1,6 @@
 import React from 'react';
-import { CategoryTileGrid } from './CategoryTileGrid';
 import { PhotoGrid } from './PhotoGrid';
-import {
-  buildLink,
-  getCategoryNumber,
-  getCurrentCategory,
-  getSubCatNumber
-} from './utilites';
+import { getCategoryNumber, getsubCategoriesList, getSubCatNumber } from './utilites';
 
 class PageContent extends React.Component {
   constructor(props) {
@@ -19,23 +13,9 @@ class PageContent extends React.Component {
     curCategory: []
   };
 
-  renderMenuList() {
-    return (
-      <div className="MainMenuLocate">
-        <div className="MenuList">
-          {this.props.category.map((element, index) => (
-            <a href={buildLink(index, '')} key={index}>
-              {element[1]}
-            </a>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   selectRenderContent() {
     const nameCat = this.props.category[this.numCat][0];
-    if (this.numSubCat === 0) {
+    /*     if (this.numSubCat === 0) {
       return (
         <CategoryTileGrid
           category={this.state.curCategory}
@@ -43,7 +23,7 @@ class PageContent extends React.Component {
           numberCat={this.numCat}
         />
       );
-    }
+    } */
     //isPhotoAlbum
     if (this.state.curCategory[this.numSubCat][1] === '1') {
       return (
@@ -80,7 +60,7 @@ class PageContent extends React.Component {
     return (
       <React.Fragment>
         {this.state.curCategory.length === 0
-          ? getCurrentCategory(this.setCurrentCategory, this.numCat)
+          ? getsubCategoriesList(this.setCurrentCategory, this.numCat)
           : this.renderPageContent()}
       </React.Fragment>
     );

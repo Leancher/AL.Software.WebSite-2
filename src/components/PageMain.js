@@ -3,7 +3,7 @@ import { buildLink } from './utilites';
 
 export class PageMain extends React.Component {
   renderCategoryGrid() {
-    return this.props.category.map((element, index) => {
+    return this.props.categoriesList.map((element, index) => {
       if (index === 0) return '';
       return (
         <div key={index} className="TileCell">
