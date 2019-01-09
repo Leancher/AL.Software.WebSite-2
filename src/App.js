@@ -5,12 +5,8 @@ import { PageMain } from './components/PageMain';
 import { NavMenu } from './components/NavMenu';
 import { Header } from './components/Header';
 import { CurrentCategory } from './components/CurrentCategory';
-import {
-  getCategoryNumber,
-  getCategoriesList,
-  getSubCatNumber,
-  getsubCategoriesList
-} from './components/utilites';
+import { PhotoViewer } from './components/PhotoViewer';
+import { requestData, getCategoryNumber, getSubCatNumber } from './components/utilites';
 
 export class App extends React.Component {
   constructor(props) {
@@ -20,6 +16,7 @@ export class App extends React.Component {
     this.subCatNum = 0;
   }
   state = {
+    isLoading: false,
     categoriesList: [],
     subCategoriesList: []
   };
@@ -28,6 +25,20 @@ export class App extends React.Component {
     if (Number(this.catNum) === 0) {
       return <PageMain categoriesList={this.state.categoriesList} />;
     }
+    if (Number(this.subCatNum) > 0) {
+      return (
+        <React.Fragment>
+          <NavMenu category={this.state.categoriesList} />
+          <PhotoViewer
+            catNum={this.catNum}
+            subCatNum={this.subCatNum}
+            catName={this.state.categoriesList[this.catNum][0]}
+            subCatCaption={this.state.subCategoriesList[this.subCatNum - 1][0]}
+          />
+        </React.Fragment>
+      );
+    }
+
     if (Number(this.catNum) > 0) {
       return (
         <React.Fragment>
@@ -39,8 +50,6 @@ export class App extends React.Component {
           />
         </React.Fragment>
       );
-    }
-    if (Number(this.subCatNum) === 0) {
     }
 
     //return <PageContent category={this.state.categoriesList} />;
@@ -56,29 +65,22 @@ export class App extends React.Component {
     );
   }
 
-  setCatsList = categoriesList => this.setState({ categoriesList: [...categoriesList] });
-
-  setSubCatsList = subCategoriesList =>
-    this.setState({ subCategoriesList: [...subCategoriesList] });
-
-  requestData() {
-    if (this.state.categoriesList.length === 0) {
-      getCategoriesList(this.setCatsList);
-    }
-    if (this.subCatNum === 0) return;
-    if (this.state.subCategoriesList.length === 0) {
-      getsubCategoriesList(this.setSubCatsList, this.subCatNum);
-    }
-  }
+  loadData = responseList => {
+    this.setState({
+      isLoading: true,
+      categoriesList: [...responseList[0]],
+      subCategoriesList: [...responseList[1]]
+    });
+  };
 
   render() {
     this.catNum = getCategoryNumber();
     this.subCatNum = getSubCatNumber();
-    const len1 = this.state.categoriesList.length;
-    //const len2 = this.state.subCategoriesList.length;
     return (
       <React.Fragment>
-        {len1 > 0 ? this.renderMainContainer() : this.requestData()}
+        {this.state.isLoading === false
+          ? requestData(this.loadData, this.catNum)
+          : this.renderMainContainer()}
       </React.Fragment>
     );
   }

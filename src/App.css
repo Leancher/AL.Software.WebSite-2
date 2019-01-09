@@ -181,8 +181,8 @@
 
 .Button {
   width: 50px;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   height: 75vh;
   text-align: center;
 }

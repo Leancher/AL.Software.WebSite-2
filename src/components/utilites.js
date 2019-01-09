@@ -6,9 +6,9 @@ export const config = {
 export const buildLink = (catID, id) =>
   window.location.origin +
   config.defaultPage +
-  '?category=' +
+  '?cat=' +
   catID +
-  (id !== '' ? '&id=' + id : '');
+  (id !== '' ? '&subcat=' + id : '');
 
 export const getCategoryNumber = () => {
   const pair = require('url').parse(window.location.search, { parseQueryString: true })
@@ -39,22 +39,21 @@ function httpGet(url) {
 const parseCompositeString = string => string.split('&').map(item => item.split(';'));
 const parseSimpleString = string => string.split('&');
 
-const serverRequest = (command, catID = '', albumID = '') =>
-  httpGet(
-    config.serverUrl + '?Command=' + command + '&catID=' + catID + '&albumID=' + albumID
+export const serverRequest = (command, cat = '', album = '') => {
+  return httpGet(
+    config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album
   );
-
-export function getCategoriesList(responseHandler) {
-  serverRequest('getCategoriesList').then(response => {
-    responseHandler(parseCompositeString(response));
-    return;
-  });
-}
-
-export function getsubCategoriesList(responseHandler, catID) {
-  serverRequest('getCurrentCategory', catID).then(response => {
-    responseHandler(parseCompositeString(response));
-    return;
+};
+export function requestData(responseHandler, catNum) {
+  const requestList = [];
+  requestList[0] = serverRequest('getCategoriesList');
+  requestList[1] = serverRequest('getCurrentCategory', catNum);
+  Promise.all(requestList).then(response => {
+    responseHandler(
+      response.map(item => {
+        return (item = parseCompositeString(item));
+      })
+    );
   });
 }
 

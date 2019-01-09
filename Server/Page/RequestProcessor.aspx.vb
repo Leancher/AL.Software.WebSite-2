@@ -8,11 +8,11 @@ Partial Class Page_PhotoProcessor
     Private AlbumID As String
     Private Category As String
     Private Command As String
-    Private CategoryID As String
+    Private CatNumber As String
     Private Sub Page_GetPhotos_Load(sender As Object, e As EventArgs) Handles Me.Load
         Command = Request.QueryString("Command")
-        CategoryID = Request.QueryString("catID")
-        AlbumID = Request.QueryString("albumID")
+        CatNumber = Request.QueryString("cat")
+        AlbumID = Request.QueryString("album")
         'Category = Request.QueryString("Category")
         Dim ResponseString As String = ""
         If Command = "getCategoriesList" Then ResponseString = GetCategoriesList()
@@ -27,8 +27,9 @@ Partial Class Page_PhotoProcessor
     End Sub
     Private Function GetCategory() As String
         Database.DatabaseOpen()
-        CategoryID = Val(CategoryID) + 1
-        Dim TableName As String = Database.GetItemByID(Config.CategoryTable, CategoryID, "Name")
+        If CatNumber = "" Then Return ""
+        CatNumber = Val(CatNumber) + 1
+        Dim TableName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
         Dim CountCategory = Database.GetCountItem(TableName)
         Dim ArrayItems(CountCategory - 1) As String
         For index = 1 To CountCategory
@@ -64,7 +65,7 @@ Partial Class Page_PhotoProcessor
         Database.DatabaseOpen()
         CountCategory = Database.GetCountItem(Config.CategoryTable)
         For Index = 1 To CountCategory
-            Dim CategoryName = Database.GetItemByID(Config.CategoryTable, CategoryID, "Name")
+            Dim CategoryName = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
             CountItemCategory = Database.GetCountItem(CategoryName)
             Dim NumberItem As Integer
             For NumberItem = 1 To CountItemCategory
@@ -83,8 +84,8 @@ Partial Class Page_PhotoProcessor
 
     Private Function GetPhotosList() As String
         Database.DatabaseOpen()
-        CategoryID = Val(CategoryID) + 1
-        Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CategoryID, "Name")
+        CatNumber = Val(CatNumber) + 1
+        Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
         Dim Path As String = Config.GetAppPath() + "\public\Pictures\" + NameCategory + "\Album" + AlbumID + "Preview"
         Try
             Dim ListPhoto As String() = Directory.GetFiles(Path)
