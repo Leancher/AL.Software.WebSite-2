@@ -179,10 +179,28 @@
   color: var(--MyDarkGrey);
 }
 
-.Button {
+.ButtonLeft {
   width: 50px;
-  /* display: flex; */
-  /* align-items: center; */
+  display: inline-block;
+  line-height: 75vh;
+  padding-top: 55px;
+}
+
+.ButtonRigth {
+  width: 50px;
+  display: inline-block;
   height: 75vh;
-  text-align: center;
+}
+
+.BtClose {
+  margin-top: 5px;
+}
+
+.BtNext {
+  height: calc(75vh - 55px);
+  display: flex;
+}
+
+.BtNext img {
+  margin: auto;
 }

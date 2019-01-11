@@ -4,10 +4,10 @@ import { getPhotosList } from './utilites';
 export class PhotoViewer extends React.Component {
   constructor(props) {
     super(props);
-    this.ArrowLEn = './Pictures/Util/ArrowLEn.png';
-    this.ArrowREn = './Pictures/Util/ArrowREn.png';
-    this.ArrowLDis = './Pictures/Util/ArrowLDis.png';
-    this.ArrowRDis = './Pictures/Util/ArrowRDis.png';
+    this.arrowLEn = './Pictures/Util/arrowLEn.png';
+    this.arrowREn = './Pictures/Util/arrowREn.png';
+    this.arrowLDis = './Pictures/Util/arrowLDis.png';
+    this.arrowRDis = './Pictures/Util/arrowRDis.png';
     this.closeEn = './Pictures/Util/CloseEn.png';
     this.closeDis = './Pictures/Util/CloseDis.png';
     this.currentPhoto = 0;
@@ -46,16 +46,18 @@ export class PhotoViewer extends React.Component {
   };
 
   setEnablePic = e => {
-    if (e.target.id === 'BtPrev') e.target.src = this.ArrowLEn;
-    if (e.target.id === 'BtNext') e.target.src = this.ArrowREn;
+    if (e.target.id === 'BtClose') e.target.src = this.closeEn;
+    if (e.target.id === 'BtPrev') e.target.src = this.arrowLEn;
+    if (e.target.id === 'BtNext') e.target.src = this.arrowREn;
   };
 
   setDisablePic = e => {
-    if (e.target.id === 'BtPrev') e.target.src = this.ArrowLDis;
-    if (e.target.id === 'BtNext') e.target.src = this.ArrowRDis;
+    if (e.target.id === 'BtClose') e.target.src = this.closeDis;
+    if (e.target.id === 'BtPrev') e.target.src = this.arrowLDis;
+    if (e.target.id === 'BtNext') e.target.src = this.arrowRDis;
   };
 
-  buildPhotoLink = () => {
+  photoLink = () => {
     const { catName, subCatNum } = this.props;
     return (
       './Pictures/' +
@@ -67,20 +69,21 @@ export class PhotoViewer extends React.Component {
     );
   };
   showNextPhoto(photoPlace) {
-    this.currentPhoto += 1;
+    this.currentPhoto = Number(this.currentPhoto) + 1;
     if (this.currentPhoto > this.state.photosList.length - 1) {
       this.currentPhoto = this.state.photosList.length - 1;
       return;
     }
-    photoPlace.src = this.buildPhotoLink();
+    photoPlace.src = this.photoLink();
   }
+
   showPrevPhoto(photoPlace) {
     this.currentPhoto -= 1;
     if (this.currentPhoto < 0) {
       this.currentPhoto = 0;
       return;
     }
-    photoPlace.src = this.buildPhotoLink();
+    photoPlace.src = this.photoLink();
   }
 
   clickButton = e => {
@@ -95,26 +98,32 @@ export class PhotoViewer extends React.Component {
       this.currentPhoto = e.target.name;
       this.setState({ mode: 'singlePhoto' });
     }
+    if (id === 'BtClose') {
+      this.setState({ mode: 'photoGrid' });
+    }
   };
 
   renderSinglePhoto() {
     return (
       <React.Fragment>
-        <div className="Button">
-          <img id="BtPrev" src={this.ArrowLDis} alt="BtPrev" />
+        <div className="ButtonLeft">
+          <img id="BtPrev" src={this.arrowLDis} alt="BtPrev" className="BtPrev" />
         </div>
         <div className="PhotoPlace">
           <img
-            id="singlePhoto"
-            src={this.buildPhotoLink()}
-            alt={this.state.photosList[this.currentPhoto]}
             className="CurrentPhoto"
+            id="CurrentPhoto"
+            src={this.photoLink()}
+            alt={this.state.photosList[this.currentPhoto]}
           />
         </div>
-        <div className="Button">
-          <img id="" src={this.closeDis} alt="BtNext" />
-          <br />
-          <img id="BtNext" src={this.ArrowRDis} alt="BtNext" />
+        <div className="ButtonRight">
+          <div className="BtClose">
+            <img id="BtClose" src={this.closeDis} alt="BtClose" />
+          </div>
+          <div className="BtNext">
+            <img id="BtNext" src={this.arrowRDis} alt="BtNext" />
+          </div>
         </div>
       </React.Fragment>
     );
@@ -122,7 +131,6 @@ export class PhotoViewer extends React.Component {
 
   selectMode() {
     if (this.state.mode === 'photoGrid') return this.renderPhotoGrid();
-
     return this.renderSinglePhoto();
   }
 
@@ -136,17 +144,9 @@ export class PhotoViewer extends React.Component {
           onMouseOut={this.setDisablePic}
           onClick={this.clickButton}
         >
-          {/*           <div className="Button" style={{ display: 'flex' }}>
-            <img id="BtPrev" src={this.ArrowLDis} alt="BtPrev" />
-          </div> */}
-
           {this.state.photosList.length === 0
             ? getPhotosList(this.loadPhotosList, this.props.catNum, this.props.subCatNum)
             : this.selectMode()}
-
-          {/*           <div className="Button" style={{ display: 'flex' }}>
-            <img id="BtNext" src={this.ArrowRDis} alt="BtNext" />
-          </div> */}
         </div>
       </div>
     );

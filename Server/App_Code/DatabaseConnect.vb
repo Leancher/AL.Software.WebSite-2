@@ -9,7 +9,7 @@ Public Class DatabaseConnect
 
     Public Sub DatabaseOpen()
         Try
-            Database = New SQLiteConnection("Data Source=" + Config.AppPath + "\Database.db; Version=3;")
+            Database = New SQLiteConnection("Data Source=" + Config.GetAppPath() + "\public\Database.db; Version=3;")
             Database.Open()
         Catch ex As Exception
             Item = ex.ToString

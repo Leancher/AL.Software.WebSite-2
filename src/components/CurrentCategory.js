@@ -20,14 +20,12 @@ function buildTailCell(catNum, index, name, caption) {
 }
 
 export function CurrentCategory(props) {
-  const captionCategory = props.category[1];
   return (
     <div className="ContentBlock">
-      <div className="ContentCaption">{captionCategory}</div>
+      <div className="ContentCaption">{props.captionCat}</div>
       <div className="TileGrid">
         {props.subCategories.map((item, index) => {
-          console.log(item);
-          return buildTailCell(props.catNum, index, props.category[0], item[0]);
+          return buildTailCell(props.catNum, index, item[0], item[1]);
         })}
       </div>
     </div>

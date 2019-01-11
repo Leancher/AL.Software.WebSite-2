@@ -6,7 +6,9 @@ import { NavMenu } from './components/NavMenu';
 import { Header } from './components/Header';
 import { CurrentCategory } from './components/CurrentCategory';
 import { PhotoViewer } from './components/PhotoViewer';
-import { requestData, getCategoryNumber, getSubCatNumber } from './components/utilites';
+import { config, requestData, getCategoryNumber, getSubCatNumber } from './components/utilites';
+
+const { siteName, name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = config;
 
 export class App extends React.Component {
   constructor(props) {
@@ -22,41 +24,54 @@ export class App extends React.Component {
   };
 
   selectContent() {
+    this.setHeadTags(this.state.categoriesList[this.catNum][description]);
+    //Номер категории 0, показываем главную страницу
     if (Number(this.catNum) === 0) {
       return <PageMain categoriesList={this.state.categoriesList} />;
     }
+    // Если передан номер подкатегории, то показываем подкатегорию
     if (Number(this.subCatNum) > 0) {
-      return (
-        <React.Fragment>
-          <NavMenu category={this.state.categoriesList} />
-          <PhotoViewer
-            catNum={this.catNum}
-            subCatNum={this.subCatNum}
-            catName={this.state.categoriesList[this.catNum][0]}
-            subCatCaption={this.state.subCategoriesList[this.subCatNum - 1][0]}
-          />
-        </React.Fragment>
-      );
+      this.setHeadTags(this.state.subCategoriesList[this.subCatNum - 1][description]);
+      //Подкатегория является фотоальбомом
+      if (this.state.subCategoriesList[this.subCatNum - 1][isPhotoAlbum] === '1') {
+        return (
+          <React.Fragment>
+            <NavMenu category={this.state.categoriesList} />
+            <PhotoViewer
+              catNum={this.catNum}
+              subCatNum={this.subCatNum}
+              catName={this.state.categoriesList[this.catNum][name]}
+              subCatCaption={this.state.subCategoriesList[this.subCatNum - 1][caption]}
+            />
+          </React.Fragment>
+        );
+      }
     }
-
+    // Номер категории больше 0, показываем список подкатегорий это категории
     if (Number(this.catNum) > 0) {
-      return (
-        <React.Fragment>
-          <NavMenu category={this.state.categoriesList} />
-          <CurrentCategory
-            subCategories={this.state.subCategoriesList}
-            category={this.state.categoriesList[this.catNum]}
-            catNum={this.catNum}
-          />
-        </React.Fragment>
-      );
+      if (this.state.categoriesList[this.catNum][isTileGrid] === '1') {
+        return (
+          <React.Fragment>
+            <NavMenu category={this.state.categoriesList} />
+            <CurrentCategory
+              subCategories={this.state.subCategoriesList}
+              captionCat={this.state.categoriesList[this.catNum][caption]}
+              catNum={this.catNum}
+            />
+          </React.Fragment>
+        );
+      }
     }
+  }
 
-    //return <PageContent category={this.state.categoriesList} />;
+  setHeadTags(description) {
+    const namePage = this.state.categoriesList[this.catNum][caption];
+    document.title = namePage + ' - ' + siteName;
+    document.getElementsByTagName('META')[2].content = description;
   }
 
   renderMainContainer() {
-    this.catName = this.state.categoriesList[this.catNum][0];
+    this.catName = this.state.categoriesList[this.catNum][name];
     return (
       <React.Fragment>
         <Header catName={this.catName} />
@@ -78,9 +93,7 @@ export class App extends React.Component {
     this.subCatNum = getSubCatNumber();
     return (
       <React.Fragment>
-        {this.state.isLoading === false
-          ? requestData(this.loadData, this.catNum)
-          : this.renderMainContainer()}
+        {this.state.isLoading === false ? requestData(this.loadData, this.catNum) : this.renderMainContainer()}
       </React.Fragment>
     );
   }

@@ -36,7 +36,8 @@ Partial Class Page_PhotoProcessor
             Dim Caption = Database.GetItemByID(TableName, index, "Caption")
             Dim Description = Database.GetItemByID(TableName, index, "Description")
             Dim IsPhotoAlbum = Database.GetItemByID(TableName, index, "IsPhotoAlbum")
-            ArrayItems(index - 1) = Caption + ";" + IsPhotoAlbum + ";" + Description
+            Dim IsArticle = Database.GetItemByID(TableName, index, "IsArticle")
+            ArrayItems(index - 1) = TableName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)
@@ -51,7 +52,7 @@ Partial Class Page_PhotoProcessor
             Dim IsTileGrid = Database.GetItemByID(Config.CategoryTable, index, "IsTileGrid")
             Dim IsPhotoAlbum = Database.GetItemByID(Config.CategoryTable, index, "IsPhotoAlbum")
             Dim Description = Database.GetItemByID(Config.CategoryTable, index, "Description")
-            ArrayCats(index - 1) = Name + ";" + Caption + ";" + IsTileGrid + ";" + IsPhotoAlbum + ";" + Description
+            ArrayCats(index - 1) = Name + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsTileGrid
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayCats)

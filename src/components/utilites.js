@@ -1,6 +1,13 @@
 export const config = {
+  siteName: 'Leancher Web site',
   defaultPage: '/index.html',
-  serverUrl: 'http://localhost:53492/Page/RequestProcessor.aspx'
+  serverUrl: 'http://localhost:53492/Page/RequestProcessor.aspx',
+  name: 0,
+  caption: 1,
+  description: 2,
+  isPhotoAlbum: 3,
+  isTileGrid: 4,
+  isArticle: 4
 };
 
 export const buildLink = (catID, id) =>
