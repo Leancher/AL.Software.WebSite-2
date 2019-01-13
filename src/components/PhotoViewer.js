@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPhotosList } from './utilites';
+import { getPhotosList, getSubCatNumber, getCategoryNumber } from './utilites';
 
 export class PhotoViewer extends React.Component {
   constructor(props) {
@@ -11,14 +11,15 @@ export class PhotoViewer extends React.Component {
     this.closeEn = './Pictures/Util/CloseEn.png';
     this.closeDis = './Pictures/Util/CloseDis.png';
     this.currentPhoto = 0;
+    this.catNum = '';
+    this.subCatNum = '';
   }
   state = {
     isLoading: false,
     mode: 'photoGrid',
     photosList: ''
   };
-  renderPhotoGrid() {
-    const { catName, subCatNum } = this.props;
+  renderPhotoGrid = () => {
     if (this.state.photosList === '') return 'В этом альбоме нет картинок';
 
     return (
@@ -28,7 +29,7 @@ export class PhotoViewer extends React.Component {
             <div className="PhotoCell" key={index}>
               <img
                 id="photo"
-                src={'./Pictures/' + catName + '/Album' + subCatNum + 'Preview/' + item}
+                src={'./Pictures/' + this.props.catName + '/Album' + this.subCatNum + 'Preview/' + item}
                 alt={item}
                 style={{ cursor: 'pointer' }}
                 name={index}
@@ -38,10 +39,10 @@ export class PhotoViewer extends React.Component {
         })}
       </div>
     );
-  }
+  };
 
   loadPhotosList = response => {
-    this.setState({ photosList: response });
+    this.setState({ isLoading: true, photosList: response });
     return this.renderPhotoGrid();
   };
 
@@ -59,14 +60,7 @@ export class PhotoViewer extends React.Component {
 
   photoLink = () => {
     const { catName, subCatNum } = this.props;
-    return (
-      './Pictures/' +
-      catName +
-      '/Album' +
-      subCatNum +
-      '/' +
-      this.state.photosList[this.currentPhoto]
-    );
+    return './Pictures/' + catName + '/Album' + subCatNum + '/' + this.state.photosList[this.currentPhoto];
   };
   showNextPhoto(photoPlace) {
     this.currentPhoto = Number(this.currentPhoto) + 1;
@@ -135,19 +129,18 @@ export class PhotoViewer extends React.Component {
   }
 
   render() {
+    this.catNum = getCategoryNumber();
+    this.subCatNum = getSubCatNumber();
     return (
-      <div className="ContentBlock">
-        <div className="ContentCaption">{this.props.subCatCaption}</div>
-        <div
-          style={{ display: 'flex' }}
-          onMouseMove={this.setEnablePic}
-          onMouseOut={this.setDisablePic}
-          onClick={this.clickButton}
-        >
-          {this.state.photosList.length === 0
-            ? getPhotosList(this.loadPhotosList, this.props.catNum, this.props.subCatNum)
-            : this.selectMode()}
-        </div>
+      <div
+        style={{ display: 'flex' }}
+        onMouseMove={this.setEnablePic}
+        onMouseOut={this.setDisablePic}
+        onClick={this.clickButton}
+      >
+        {this.state.isLoading === false
+          ? getPhotosList(this.loadPhotosList, this.catNum, this.subCatNum)
+          : this.selectMode()}
       </div>
     );
   }

@@ -10,24 +10,18 @@ export const config = {
   isArticle: 4
 };
 
-export const buildLink = (catID, id) =>
-  window.location.origin +
-  config.defaultPage +
-  '?cat=' +
-  catID +
-  (id !== '' ? '&subcat=' + id : '');
+export const buildLink = (catID, subcat) =>
+  window.location.origin + config.defaultPage + '?cat=' + catID + (subcat !== '' ? '&subcat=' + subcat : '');
 
 export const getCategoryNumber = () => {
-  const pair = require('url').parse(window.location.search, { parseQueryString: true })
-    .query;
+  const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
   const key = Object.keys(pair);
   if (key.length === 0) return 0;
   return pair[key[0]];
 };
 
 export function getSubCatNumber() {
-  const pair = require('url').parse(window.location.search, { parseQueryString: true })
-    .query;
+  const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
   const key = Object.keys(pair);
   if (!key[1]) return 0;
   return pair[key[1]];
@@ -47,9 +41,7 @@ const parseCompositeString = string => string.split('&').map(item => item.split(
 const parseSimpleString = string => string.split('&');
 
 export const serverRequest = (command, cat = '', album = '') => {
-  return httpGet(
-    config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album
-  );
+  return httpGet(config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album);
 };
 export function requestData(responseHandler, catNum) {
   const requestList = [];
@@ -68,5 +60,11 @@ export function getPhotosList(responseHandler, catID, albumID) {
   serverRequest('getPhotosList', catID, albumID).then(response => {
     responseHandler(parseSimpleString(response));
     return;
+  });
+}
+
+export function fakeDelay(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
   });
 }

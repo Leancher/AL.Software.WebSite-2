@@ -1,7 +1,7 @@
 import React from 'react';
 import { buildLink } from './utilites';
 
-export class PageMain extends React.Component {
+export class HomePage extends React.Component {
   renderCategoryGrid() {
     return this.props.categoriesList.map((element, index) => {
       if (index === 0) return '';

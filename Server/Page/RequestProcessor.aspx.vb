@@ -31,13 +31,14 @@ Partial Class Page_PhotoProcessor
         CatNumber = Val(CatNumber) + 1
         Dim TableName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
         Dim CountCategory = Database.GetCountItem(TableName)
-        Dim ArrayItems(CountCategory - 1) As String
+        Dim ArrayItems(CountCategory) As String
+        ArrayItems(0) = "EmptyItem"
         For index = 1 To CountCategory
             Dim Caption = Database.GetItemByID(TableName, index, "Caption")
             Dim Description = Database.GetItemByID(TableName, index, "Description")
             Dim IsPhotoAlbum = Database.GetItemByID(TableName, index, "IsPhotoAlbum")
             Dim IsArticle = Database.GetItemByID(TableName, index, "IsArticle")
-            ArrayItems(index - 1) = TableName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
+            ArrayItems(index) = TableName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)

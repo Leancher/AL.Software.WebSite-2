@@ -1,11 +1,11 @@
 import React from 'react';
-import { buildLink } from './utilites';
+import { buildLink, getCategoryNumber } from './utilites';
 
 function buildTailCell(catNum, index, name, caption) {
-  const fileName = name + (index + 1) + '.jpg';
+  const fileName = name + index + '.jpg';
   return (
     <div className="TileCell" key={index}>
-      <a href={buildLink(catNum, index + 1)}>
+      <a href={buildLink(catNum, index)}>
         <div className="TileCellPic">
           <img src={'./Pictures/Preview/' + fileName} alt={fileName} />
         </div>
@@ -20,14 +20,14 @@ function buildTailCell(catNum, index, name, caption) {
 }
 
 export function CurrentCategory(props) {
+  const catNum = getCategoryNumber();
   return (
-    <div className="ContentBlock">
-      <div className="ContentCaption">{props.captionCat}</div>
-      <div className="TileGrid">
-        {props.subCategories.map((item, index) => {
-          return buildTailCell(props.catNum, index, item[0], item[1]);
-        })}
-      </div>
+    <div className="TileGrid">
+      {props.subCategories.map((item, index) => {
+        //Массив начинается с 0, таблицв БД с 1, первый элемент пустой
+        if (index === 0) return '';
+        return buildTailCell(catNum, index, item[0], item[1]);
+      })}
     </div>
   );
 }
