@@ -31,24 +31,28 @@ export class App extends React.Component {
   }
 
   setContent() {
+    const components = [];
+    console.log(this.state.subCategoriesList[this.subCatNum][isArticle]);
     this.catName = this.state.categoriesList[this.catNum][name];
     // Если передан номер подкатегории, то показываем подкатегорию
     if (Number(this.subCatNum) > 0) {
       this.setHeadTags(this.state.subCategoriesList[this.subCatNum][description]);
+      //Подкатегория или ее часть является статьей
+      if (this.state.subCategoriesList[this.subCatNum][isArticle] === '1') {
+        components.push(<Article catName={this.catName} />);
+      }
       //Подкатегория является фотоальбомом
       if (this.state.subCategoriesList[this.subCatNum][isPhotoAlbum] === '1') {
-        return <PhotoViewer catName={this.catName} />;
-      }
-      if (this.state.subCategoriesList[this.subCatNum][isArticle] === '1') {
-        return <Article catName={this.catName} />;
+        components.push(<PhotoViewer catName={this.catName} />);
       }
     }
-    // Номер категории больше 0, показываем список подкатегорий этой категории
-    if (Number(this.catNum) > 0) {
+    // Номер категории больше 0 и нет подкатегории, показываем список подкатегорий этой категории
+    if (Number(this.catNum) > 0 && Number(this.subCatNum) === 0) {
       if (this.state.categoriesList[this.catNum][isTileGrid] === '1') {
-        return <CurrentCategory subCategories={this.state.subCategoriesList} />;
+        components.push(<CurrentCategory subCategories={this.state.subCategoriesList} />);
       }
     }
+    return components;
   }
 
   setCaption() {
