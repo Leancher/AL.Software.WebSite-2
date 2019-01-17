@@ -1,6 +1,7 @@
 export const config = {
   siteName: 'Leancher Web site',
   defaultPage: '/index.html',
+  picFolder: './Pictures',
   serverUrl: 'http://localhost:53492/Page/RequestProcessor.aspx',
   name: 0,
   caption: 1,
@@ -58,6 +59,13 @@ export function requestData(responseHandler, catNum) {
 
 export function getPhotosList(responseHandler, catID, albumID) {
   serverRequest('getPhotosList', catID, albumID).then(response => {
+    responseHandler(parseSimpleString(response));
+    return;
+  });
+}
+
+export function getNotesPreview(responseHandler) {
+  serverRequest('getNotesPreview').then(response => {
     responseHandler(parseSimpleString(response));
     return;
   });

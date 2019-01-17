@@ -14,7 +14,7 @@ export function Article(props) {
 
   return (
     <div className="ContentColumn">
-      <LoadableComponent />
+      <LoadableComponent catName={catName} />
     </div>
   );
 }

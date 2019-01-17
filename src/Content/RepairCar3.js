@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 
-export default function RepairCar1() {
+export default function RepairCar3() {
   return (
     <React.Fragment>
       <br />

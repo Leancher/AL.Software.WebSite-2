@@ -7,6 +7,7 @@ import { Header } from './components/Header';
 import { CurrentCategory } from './components/CurrentCategory';
 import { PhotoViewer } from './components/PhotoViewer';
 import { Article } from './components/Article';
+import { MyNotes } from './components/MyNotes';
 import { config, requestData, getCategoryNumber, getSubCatNumber } from './components/utilites';
 
 const { siteName, name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = config;
@@ -50,6 +51,10 @@ export class App extends React.Component {
     if (Number(this.catNum) > 0 && Number(this.subCatNum) === 0) {
       if (this.state.categoriesList[this.catNum][isTileGrid] === '1') {
         components.push(<CurrentCategory subCategories={this.state.subCategoriesList} />);
+      }
+      //Категория "Заметки"
+      if (Number(this.catNum) === 5) {
+        components.push(<MyNotes />);
       }
     }
     return components;

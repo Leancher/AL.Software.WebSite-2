@@ -1,6 +1,7 @@
 ﻿import React from 'react';
-
-export default function HistCher1() {
+import { config } from '../components/utilites';
+export default function HistCher1(props) {
+  const catName = props.catName;
   return (
     <React.Fragment>
       <h5 style={{ textAlign: 'center' }}>Е. Е. Шулятикова</h5>
@@ -183,50 +184,50 @@ export default function HistCher1() {
       <i>Щепец</i> - верхняя часть стены в форме треугольника между скатами кровли, не отделенная карнизом. <br />
       <p>
         Дом Сухаревых. 1832 г. (Советский проспект, 71) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 01.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 01.png'} alt="Pic" />
       </p>
       <p>
         Жилой дом. 1870 г. (Советский проспект, 67) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 02.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 02.png'} alt="Pic" />
       </p>
       <p>
         Здание бывшего окружного суда. 1857 г. (Советский проспект, 50) Эклектика в «неоренессансных» традициях.
         Отреставрировано. <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 05.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 05.png'} alt="Pic" />
       </p>
       <p>
         Часовня Филиппо-Ирапского монастыря. 1857 г. Эклектика. Русский стиль. Отреставрирована. Воссозданы утраченные
         портик, закомары и шатер. <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 06.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 06.png'} alt="Pic" />
       </p>
       <p>
         Пристройка времен эклектики к зданию в стиле классицизма (Советский проспект, 23) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 07.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 07.png'} alt="Pic" />
       </p>
       <p>
         Здание бывшего Александровского технического училища. 1875 г. (ул. Труда 1) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 08.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 08.png'} alt="Pic" />
       </p>
       <p>
         Зданием бывшего женского профессионального училища. 1902 г. (ул. Социалистическая, 52) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 09.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 09.png'} alt="Pic" />
       </p>
       <p>
         Здание бывших торговых рядов. 1906 г. (Советский проспект, 30а) «Кирпичный» стиль в традициях французского
         Возрождения <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 10.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 10.png'} alt="Pic" />
       </p>
       <p>
         Деревянное задние, построенное в приемах «кирпичного» стиля (Советский проспект, 53) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 11.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 11.png'} alt="Pic" />
       </p>
       <p>
         Административное здание. 1926 г. (Советский проспект, 54) Архитектор Шапиро <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 12.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 12.png'} alt="Pic" />
       </p>
       <p>
         Деревянное здание в традициях неоклассицизма. 1902 г. (Советский проспект, 1) <br />
-        <img src="../Pictures/HistCher/Album1/Рисунок 13.png" alt="Pic" />
+        <img src={config.picFolder + '/' + catName + '/Album1/Рисунок 13.png'} alt="Pic" />
       </p>
     </React.Fragment>
   );

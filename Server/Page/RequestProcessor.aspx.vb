@@ -15,34 +15,26 @@ Partial Class Page_PhotoProcessor
         AlbumID = Request.QueryString("album")
         'Category = Request.QueryString("Category")
         Dim ResponseString As String = ""
-        If Command = "getCategoriesList" Then ResponseString = GetCategoriesList()
-        If Command = "getCurrentCategory" Then ResponseString = GetCategory()
-        If Command = "getPhotosList" Then ResponseString = GetPhotosList()
-        If Command = "DescriptionPhoto" Then ResponseString = GetDataFromExif()
-        If Command = "DescriptionAlbum" Then ResponseString = GetDescriptionAlbum()
-        If Command = "GetCountView" Then ResponseString = GetCountView()
         'Для возможности отправки с другого сайта
         Response.AppendHeader("Access-Control-Allow-Origin", "*")
+        Select Case Command
+            Case "getCategoriesList"
+                ResponseString = GetCategoriesList()
+            Case "getCurrentCategory"
+                ResponseString = GetCategory()
+            Case "getPhotosList"
+                ResponseString = GetPhotosList()
+            Case "DescriptionPhoto"
+                ResponseString = GetDataFromExif()
+            Case "DescriptionAlbum"
+                ResponseString = GetDescriptionAlbum()
+            Case "GetCountView"
+                ResponseString = GetCountView()
+            Case "getNotesPreview"
+                ResponseString = GetPreviewNotes()
+        End Select
         Response.Write(ResponseString)
     End Sub
-    Private Function GetCategory() As String
-        Database.DatabaseOpen()
-        If CatNumber = "" Then Return ""
-        CatNumber = Val(CatNumber) + 1
-        Dim TableName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
-        Dim CountCategory = Database.GetCountItem(TableName)
-        Dim ArrayItems(CountCategory) As String
-        ArrayItems(0) = "EmptyItem"
-        For index = 1 To CountCategory
-            Dim Caption = Database.GetItemByID(TableName, index, "Caption")
-            Dim Description = Database.GetItemByID(TableName, index, "Description")
-            Dim IsPhotoAlbum = Database.GetItemByID(TableName, index, "IsPhotoAlbum")
-            Dim IsArticle = Database.GetItemByID(TableName, index, "IsArticle")
-            ArrayItems(index) = TableName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
-        Next index
-        Database.DatabaseClose()
-        Return String.Join("&", ArrayItems)
-    End Function
     Private Function GetCategoriesList() As String
         Database.DatabaseOpen()
         Dim CountCategory = Database.GetCountItem(Config.CategoryTable)
@@ -57,6 +49,56 @@ Partial Class Page_PhotoProcessor
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayCats)
+    End Function
+    Private Function GetCategory() As String
+        Database.DatabaseOpen()
+        If CatNumber = "" Then Return ""
+        CatNumber = Val(CatNumber) + 1
+        Dim TableName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
+        Dim CountItems = Database.GetCountItem(TableName)
+        Dim ArrayItems(CountItems) As String
+        ArrayItems(0) = "EmptyItem"
+        For index = 1 To CountItems
+            Dim Caption = Database.GetItemByID(TableName, index, "Caption")
+            Dim Description = Database.GetItemByID(TableName, index, "Description")
+            Dim IsPhotoAlbum = Database.GetItemByID(TableName, index, "IsPhotoAlbum")
+            Dim IsArticle = Database.GetItemByID(TableName, index, "IsArticle")
+            ArrayItems(index) = TableName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
+        Next index
+        Database.DatabaseClose()
+        Return String.Join("&", ArrayItems)
+    End Function
+    Private Function GetPreviewNotes() As String
+        Database.DatabaseOpen()
+        Dim CountItems = Database.GetCountItem("MyNotes")
+        Dim ArrayItems(CountItems) As String
+        For Index = 1 To CountItems
+            Dim Path = Config.GetAppPath() + "\src\Content" + "\" + "MyNote" + Index.ToString + ".txt"
+            Dim FileInfo As New FileInfo(Path)
+            If FileInfo.Exists = True Then
+                Using reader As New StreamReader(Path)
+                    ArrayItems(Index) = Left(reader.ReadToEnd(), 300)
+                End Using
+            End If
+        Next Index
+        Database.DatabaseClose()
+        Return String.Join("&", ArrayItems)
+    End Function
+    Private Function GetPhotosList() As String
+        Database.DatabaseOpen()
+        CatNumber = Val(CatNumber) + 1
+        Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
+        Dim Path As String = Config.GetAppPath() + "\public\Pictures\" + NameCategory + "\Album" + AlbumID + "Preview"
+        Try
+            Dim ListPhoto As String() = Directory.GetFiles(Path)
+            For i = 0 To ListPhoto.Length - 1
+                Dim FileInfo As New FileInfo(Path)
+                ListPhoto(i) = IO.Path.GetFileName(ListPhoto(i))
+            Next i
+            Return String.Join("&", ListPhoto)
+        Catch ex As Exception
+            Return ""
+        End Try
     End Function
     Private Function GetCountView() As String
         Dim Index As Integer = 0
@@ -82,23 +124,6 @@ Partial Class Page_PhotoProcessor
         ResponseString = Right(ResponseString, ResponseString.Length - 1)
         Database.DatabaseClose()
         Return ResponseString
-    End Function
-
-    Private Function GetPhotosList() As String
-        Database.DatabaseOpen()
-        CatNumber = Val(CatNumber) + 1
-        Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
-        Dim Path As String = Config.GetAppPath() + "\public\Pictures\" + NameCategory + "\Album" + AlbumID + "Preview"
-        Try
-            Dim ListPhoto As String() = Directory.GetFiles(Path)
-            For i = 0 To ListPhoto.Length - 1
-                Dim FileInfo As New FileInfo(Path)
-                ListPhoto(i) = IO.Path.GetFileName(ListPhoto(i))
-            Next i
-            Return String.Join("&", ListPhoto)
-        Catch ex As Exception
-            Return ""
-        End Try
     End Function
     Private Function GetDescFromDB() As String
         Dim ResponseString As String = ""

@@ -1,4 +1,4 @@
-﻿import React from "react";
+﻿import React from 'react';
 
 export default function MyProjects1() {
   return (
@@ -14,7 +14,7 @@ export default function MyProjects1() {
       <br />
       Схема, плата и прошивка на <a href="https://github.com/Leancher/AL.Car.StartingEngine">GitHub</a>
       <br />
-      <img src="~/Pictures/Content/Project01-01.jpg" alt="Project01-01.jpg" />
+      <img src="./Pictures/Content/Project01-01.jpg" alt="Project01-01.jpg" />
     </React.Fragment>
   );
 }
