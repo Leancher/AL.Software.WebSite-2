@@ -33,7 +33,6 @@ export class App extends React.Component {
 
   setContent() {
     const components = [];
-    console.log(this.state.subCategoriesList[this.subCatNum][isArticle]);
     this.catName = this.state.categoriesList[this.catNum][name];
     // Если передан номер подкатегории, то показываем подкатегорию
     if (Number(this.subCatNum) > 0) {
@@ -53,8 +52,8 @@ export class App extends React.Component {
         components.push(<CurrentCategory subCategories={this.state.subCategoriesList} />);
       }
       //Категория "Заметки"
-      if (Number(this.catNum) === 5) {
-        components.push(<MyNotes />);
+      if (Number(this.catNum) === 7) {
+        components.push(<MyNotes key={7} />);
       }
     }
     return components;

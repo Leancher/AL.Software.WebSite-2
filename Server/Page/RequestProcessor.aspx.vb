@@ -31,7 +31,9 @@ Partial Class Page_PhotoProcessor
             Case "GetCountView"
                 ResponseString = GetCountView()
             Case "getNotesPreview"
-                ResponseString = GetPreviewNotes()
+                ResponseString = GetNotesPreview()
+            Case "getSingleNote"
+                ResponseString = GetSingleNote()
         End Select
         Response.Write(ResponseString)
     End Sub
@@ -68,26 +70,40 @@ Partial Class Page_PhotoProcessor
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)
     End Function
-    Private Function GetPreviewNotes() As String
+    Private Function GetNotesPreview() As String
         Database.DatabaseOpen()
-        Dim CountItems = Database.GetCountItem("MyNotes")
+        Dim TableName = "MyNotes"
+        Dim CountItems = Database.GetCountItem(TableName)
         Dim ArrayItems(CountItems) As String
         For Index = 1 To CountItems
             Dim Path = Config.GetAppPath() + "\src\Content" + "\" + "MyNote" + Index.ToString + ".txt"
             Dim FileInfo As New FileInfo(Path)
             If FileInfo.Exists = True Then
+                Dim Caption = Database.GetItemByID(TableName, Index, "Caption")
                 Using reader As New StreamReader(Path)
-                    ArrayItems(Index) = Left(reader.ReadToEnd(), 300)
+                    ArrayItems(Index) = Caption + ";" + Left(reader.ReadToEnd(), 300)
                 End Using
             End If
         Next Index
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)
     End Function
+    Private Function GetSingleNote() As String
+        Dim NumNote = Request.QueryString("note")
+        Dim Path = Config.GetAppPath() + "\src\Content" + "\" + "MyNote" + NumNote.ToString + ".txt"
+        Dim FileInfo As New FileInfo(Path)
+        If FileInfo.Exists = True Then
+            Using reader As New StreamReader(Path)
+                Return reader.ReadToEnd()
+            End Using
+        End If
+        Return ""
+    End Function
     Private Function GetPhotosList() As String
         Database.DatabaseOpen()
         CatNumber = Val(CatNumber) + 1
         Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
+        Database.DatabaseClose()
         Dim Path As String = Config.GetAppPath() + "\public\Pictures\" + NameCategory + "\Album" + AlbumID + "Preview"
         Try
             Dim ListPhoto As String() = Directory.GetFiles(Path)

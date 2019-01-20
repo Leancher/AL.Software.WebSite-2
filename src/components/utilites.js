@@ -41,9 +41,10 @@ function httpGet(url) {
 const parseCompositeString = string => string.split('&').map(item => item.split(';'));
 const parseSimpleString = string => string.split('&');
 
-export const serverRequest = (command, cat = '', album = '') => {
-  return httpGet(config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album);
+export const serverRequest = (command, cat = '', album = '', note = '') => {
+  return httpGet(config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album + '&note=' + note);
 };
+
 export function requestData(responseHandler, catNum) {
   const requestList = [];
   requestList[0] = serverRequest('getCategoriesList');
@@ -66,7 +67,14 @@ export function getPhotosList(responseHandler, catID, albumID) {
 
 export function getNotesPreview(responseHandler) {
   serverRequest('getNotesPreview').then(response => {
-    responseHandler(parseSimpleString(response));
+    responseHandler(parseCompositeString(response));
+    return;
+  });
+}
+
+export function getSingleNote(responseHandler, note) {
+  serverRequest('getSingleNote', '', '', note).then(response => {
+    responseHandler(response);
     return;
   });
 }

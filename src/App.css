@@ -170,9 +170,9 @@
 }
 
 .TextLink {
+  cursor: 'pointer';
   font-weight: bold;
   color: var(--MyMiddleGrey);
-  text-decoration: none;
 }
 
 .TextLink:hover {
