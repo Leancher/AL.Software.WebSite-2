@@ -17,7 +17,10 @@ Partial Class Page_PhotoProcessor
         Dim ResponseString As String = ""
         'Для возможности отправки с другого сайта
         Response.AppendHeader("Access-Control-Allow-Origin", "*")
+
         Select Case Command
+            Case "TestCommand"
+                ResponseString = "TestResponse"
             Case "getCategoriesList"
                 ResponseString = GetCategoriesList()
             Case "getCurrentCategory"

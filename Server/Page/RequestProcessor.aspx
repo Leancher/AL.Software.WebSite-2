@@ -1,1 +1,0 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="RequestProcessor.aspx.vb" Inherits="Page_PhotoProcessor" %>
