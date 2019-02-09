@@ -54,7 +54,6 @@ export class MyNotes extends React.Component {
   }
 
   clickButton = e => {
-    console.log(e.target);
     this.curNoteNum = e.target.id;
     this.curCapNote = this.state.notesList[this.curNoteNum][0];
     this.setState({ mode: 'singleNote', isLoading: false });
@@ -66,13 +65,6 @@ export class MyNotes extends React.Component {
   }
 
   render() {
-    return (
-      <div className="ContentColumn">
-        {this.selectMode()}
-        {/*         {this.state.isLoading === false
-          ? getNotesPreview(this.loadNotesPreviewList, this.catNum, this.subCatNum)
-          : this.selectMode()} */}
-      </div>
-    );
+    return <div className="ContentColumn">{this.selectMode()}</div>;
   }
 }

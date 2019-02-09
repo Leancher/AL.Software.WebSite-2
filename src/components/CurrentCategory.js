@@ -1,33 +1,34 @@
 import React from 'react';
-import { buildLink, getCategoryNumber } from './utilites';
+import { buildLink } from './utilites';
 
-function buildTailCell(catNum, index, name, caption) {
-  const fileName = name + index + '.jpg';
-  return (
-    <div className="TileCell" key={index}>
-      <a href={buildLink(catNum, index)}>
-        <div className="TileCellPic">
-          <img src={'./Pictures/Preview/' + fileName} alt={fileName} />
-        </div>
-        <div className="TileCellCaption">
-          {caption}
-          <br />
-          {caption.length < 40 ? <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> : null}
-        </div>
-      </a>
-    </div>
-  );
-}
+export class CurrentCategory extends React.Component {
+  buildTailCell(index, name, caption) {
+    const fileName = name + index + '.jpg';
+    return (
+      <div className="TileCell" key={index}>
+        <a href={buildLink(this.props.catNum, index)}>
+          <div className="TileCellPic">
+            <img src={'./Pictures/Preview/' + fileName} alt={fileName} />
+          </div>
+          <div className="TileCellCaption">
+            {caption}
+            <br />
+            {caption.length < 40 ? <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> : null}
+          </div>
+        </a>
+      </div>
+    );
+  }
 
-export function CurrentCategory(props) {
-  const catNum = getCategoryNumber();
-  return (
-    <div className="TileGrid">
-      {props.subCategories.map((item, index) => {
-        //Массив начинается с 0, таблицв БД с 1, первый элемент пустой
-        if (index === 0) return '';
-        return buildTailCell(catNum, index, item[0], item[1]);
-      })}
-    </div>
-  );
+  renderTileGrid() {
+    return this.props.subCategory.map((item, index) => {
+      //Массив начинается с 0, таблицв БД с 1, первый элемент пустой
+      if (index === 0) return '';
+      return this.buildTailCell(index, item[0], item[1]);
+    });
+  }
+
+  render() {
+    return <div className="TileGrid">{this.renderTileGrid()}</div>;
+  }
 }

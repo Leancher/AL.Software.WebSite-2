@@ -59,16 +59,18 @@ Partial Class Page_PhotoProcessor
         Database.DatabaseOpen()
         If CatNumber = "" Then Return ""
         CatNumber = Val(CatNumber) + 1
-        Dim TableName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
-        Dim CountItems = Database.GetCountItem(TableName)
+        Dim CatName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
+        Dim CatCaption As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Caption")
+        Dim CatIsTileGrid = Database.GetItemByID(Config.CategoryTable, CatNumber, "IsTileGrid")
+        Dim CountItems = Database.GetCountItem(CatName)
         Dim ArrayItems(CountItems) As String
-        ArrayItems(0) = "EmptyItem"
+        ArrayItems(0) = CatName + ";" + CatCaption + ";;;" + CatIsTileGrid
         For index = 1 To CountItems
-            Dim Caption = Database.GetItemByID(TableName, index, "Caption")
-            Dim Description = Database.GetItemByID(TableName, index, "Description")
-            Dim IsPhotoAlbum = Database.GetItemByID(TableName, index, "IsPhotoAlbum")
-            Dim IsArticle = Database.GetItemByID(TableName, index, "IsArticle")
-            ArrayItems(index) = TableName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
+            Dim Caption = Database.GetItemByID(CatName, index, "Caption")
+            Dim Description = Database.GetItemByID(CatName, index, "Description")
+            Dim IsPhotoAlbum = Database.GetItemByID(CatName, index, "IsPhotoAlbum")
+            Dim IsArticle = Database.GetItemByID(CatName, index, "IsArticle")
+            ArrayItems(index) = CatName + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsArticle
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)

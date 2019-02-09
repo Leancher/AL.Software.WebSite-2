@@ -12,9 +12,7 @@
 .header {
   display: flex;
   align-items: center;
-  margin-left: var(--GlobalMarginLeft);
   margin-top: 9px;
-  width: var(--GlobalWidth);
   height: var(--HeaderHeight);
   background-color: var(--MyYellow);
 }

@@ -1,14 +1,13 @@
 import React from 'react';
-//import ReactDOM from "react-dom";
 import './App.css';
 import { HomePage } from './components/HomePage';
+import { ContentPage } from './components/ContentPage';
 import { NavMenu } from './components/NavMenu';
-import { Header } from './components/Header';
 import { CurrentCategory } from './components/CurrentCategory';
 import { PhotoViewer } from './components/PhotoViewer';
 import { Article } from './components/Article';
 import { MyNotes } from './components/MyNotes';
-import { config, requestData, getCategoryNumber, getSubCatNumber } from './components/utilites';
+import { config, getCategoryNumber, getSubCatNumber } from './components/utilites';
 
 const { siteName, name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = config;
 
@@ -67,7 +66,7 @@ export class App extends React.Component {
   renderContentPage() {
     return (
       <React.Fragment>
-        <NavMenu category={this.state.categoriesList} />
+        <NavMenu />
         <div className="ContentBlock">
           <div className="ContentCaption">{this.setCaption()}</div>
           {this.setContent()}
@@ -76,16 +75,11 @@ export class App extends React.Component {
     );
   }
 
-  renderHomePage = () => <HomePage categoriesList={this.state.categoriesList} />;
-
   renderMain() {
-    this.catName = this.state.categoriesList[this.catNum][name];
-    this.setHeadTags(this.state.categoriesList[this.catNum][description]);
     return (
       <React.Fragment>
-        <Header catName={this.catName} />
         {/* Номер категории 0, показываем главную страницу */}
-        <div className="Body">{Number(this.catNum) === 0 ? this.renderHomePage() : this.renderContentPage()}</div>
+        {Number(this.catNum) === 0 ? <HomePage /> : <ContentPage />}
       </React.Fragment>
     );
   }
@@ -101,10 +95,6 @@ export class App extends React.Component {
   render() {
     this.catNum = getCategoryNumber();
     this.subCatNum = getSubCatNumber();
-    return (
-      <React.Fragment>
-        {this.state.isLoading === false ? requestData(this.loadData, this.catNum) : this.renderMain()}
-      </React.Fragment>
-    );
+    return <React.Fragment>{this.renderMain()}</React.Fragment>;
   }
 }

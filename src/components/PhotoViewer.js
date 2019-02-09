@@ -11,8 +11,9 @@ export class PhotoViewer extends React.Component {
     this.closeEn = './Pictures/Util/CloseEn.png';
     this.closeDis = './Pictures/Util/CloseDis.png';
     this.currentPhoto = 0;
-    this.catNum = '';
-    this.subCatNum = '';
+    this.catName = '';
+    this.catNum = getCategoryNumber();
+    this.subCatNum = getSubCatNumber();
   }
   state = {
     isLoading: false,
@@ -59,8 +60,9 @@ export class PhotoViewer extends React.Component {
   };
 
   photoLink = () => {
-    const { catName, subCatNum } = this.props;
-    return './Pictures/' + catName + '/Album' + subCatNum + '/' + this.state.photosList[this.currentPhoto];
+    const link =
+      './Pictures/' + this.props.catName + '/Album' + this.subCatNum + '/' + this.state.photosList[this.currentPhoto];
+    return link;
   };
   showNextPhoto(photoPlace) {
     this.currentPhoto = Number(this.currentPhoto) + 1;
@@ -129,8 +131,6 @@ export class PhotoViewer extends React.Component {
   }
 
   render() {
-    this.catNum = getCategoryNumber();
-    this.subCatNum = getSubCatNumber();
     return (
       <div
         style={{ display: 'flex' }}

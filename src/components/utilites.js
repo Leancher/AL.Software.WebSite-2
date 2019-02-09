@@ -12,8 +12,13 @@ export const config = {
   isArticle: 4
 };
 
-export const buildLink = (catID, subcat) =>
-  window.location.origin + config.defaultPage + '?cat=' + catID + (subcat !== '' ? '&subcat=' + subcat : '');
+export const mainPageProps = {
+  namePage: 'Главная',
+  description: 'Главная страница сайта'
+};
+
+export const buildLink = (cat, subCat) =>
+  window.location.origin + config.defaultPage + '?cat=' + cat + '&subcat=' + subCat;
 
 export const getCategoryNumber = () => {
   const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
@@ -56,6 +61,20 @@ export function requestData(responseHandler, catNum) {
         return (item = parseCompositeString(item));
       })
     );
+  });
+}
+
+export function getCurrentCategory(responseHandler, catNum) {
+  serverRequest('getCurrentCategory', catNum).then(response => {
+    responseHandler(parseCompositeString(response));
+    return;
+  });
+}
+
+export function getCategoriesList(responseHandler) {
+  serverRequest('getCategoriesList').then(response => {
+    responseHandler(parseCompositeString(response));
+    return;
   });
 }
 
