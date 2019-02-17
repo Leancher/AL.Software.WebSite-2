@@ -2,8 +2,8 @@ export const config = {
   siteName: 'Leancher Web site',
   defaultPage: '/index.html',
   picFolder: './Pictures',
-  serverUrl: 'http://localhost:53492/Server.aspx',
-  //serverUrl: 'http://192.168.0.100:8090/Server.aspx',
+  //serverUrl: 'http://localhost:53492/Server.aspx',
+  serverUrl: 'http://192.168.0.100:8090/Server.aspx',
   name: 0,
   caption: 1,
   description: 2,
@@ -17,7 +17,17 @@ export const mainPageProps = {
   description: 'Главная страница сайта'
 };
 
-export const buildLink = (cat, subCat) => window.location.origin + '/?cat=' + cat + '&subcat=' + subCat;
+export const buildLink = (cat, subCat = 0) => window.location.origin + '/?cat=' + cat + '&subcat=' + subCat;
+
+export const parseQueryString = param => {
+  const arrayQS = require('url').parse(window.location.search, { parseQueryString: true }).query;
+  const keys = Object.keys(arrayQS);
+  const arrayParams = {};
+  !keys[0] ? (arrayParams.cat = 0) : (arrayParams.cat = arrayQS[keys[0]]);
+  !keys[1] ? (arrayParams.subCat = 0) : (arrayParams.subCat = arrayQS[keys[1]]);
+  console.log(arrayParams);
+  return arrayParams[param];
+};
 
 export const getCategoryNumber = () => {
   const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
@@ -50,8 +60,8 @@ export const serverRequest = (command, cat = '', album = '', note = '') => {
   return httpGet(config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album + '&note=' + note);
 };
 
-export function getCurrentCategory(responseHandler, catNum) {
-  serverRequest('getCurrentCategory', catNum).then(response => {
+export function getCurrentCategory(responseHandler, category) {
+  serverRequest('getCurrentCategory', category).then(response => {
     responseHandler(parseCompositeString(response));
     return;
   });

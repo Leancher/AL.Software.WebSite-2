@@ -1,5 +1,5 @@
 import React from 'react';
-import { config } from './utilites';
+import { buildLink } from './utilites';
 
 export function Header(props) {
   let logoName = props.catName;
@@ -13,7 +13,7 @@ export function Header(props) {
         </a>
       </div>
       <div className="HeaderMenu">
-        <a href="\?cat=statistics" className="HeaderMenuItem">
+        <a href={buildLink('statistics')} className="HeaderMenuItem">
           Статистика
         </a>
         <br />

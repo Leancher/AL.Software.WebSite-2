@@ -6,24 +6,27 @@ Partial Class Page_PhotoProcessor
     Inherits Page
     Private Database As New DatabaseConnect()
     Private AlbumID As String
-    Private Category As String
+    'Private Category As String
     Private Command As String
-    Private CatNumber As String
+    Private Category As String
     Private Sub Page_GetPhotos_Load(sender As Object, e As EventArgs) Handles Me.Load
         Command = Request.QueryString("Command")
-        CatNumber = Request.QueryString("cat")
+        Category = Request.QueryString("cat")
         AlbumID = Request.QueryString("album")
         'Category = Request.QueryString("Category")
         Dim ResponseString As String = ""
         'Для возможности отправки с другого сайта
         Response.AppendHeader("Access-Control-Allow-Origin", "*")
-
         Select Case Command
             Case "TestCommand"
                 ResponseString = "TestResponse"
             Case "getCategoriesList"
                 ResponseString = GetCategoriesList()
             Case "getCurrentCategory"
+                If Category = "statistics" Then
+                    ResponseString = GetCountView()
+                    Exit Select
+                End If
                 ResponseString = GetCategory()
             Case "getPhotosList"
                 ResponseString = GetPhotosList()
@@ -57,14 +60,15 @@ Partial Class Page_PhotoProcessor
     End Function
     Private Function GetCategory() As String
         Database.DatabaseOpen()
-        If CatNumber = "" Then Return ""
-        CatNumber = Val(CatNumber) + 1
-        Dim CatName As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
-        Dim CatCaption As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Caption")
-        Dim CatIsTileGrid = Database.GetItemByID(Config.CategoryTable, CatNumber, "IsTileGrid")
+        If Category = "" Then Return ""
+        Category = Val(Category) + 1
+        Dim CatName As String = Database.GetItemByID(Config.CategoryTable, Category, "Name")
+        Dim CatCaption As String = Database.GetItemByID(Config.CategoryTable, Category, "Caption")
+        Dim CatIsTileGrid = Database.GetItemByID(Config.CategoryTable, Category, "IsTileGrid")
+        Dim CatDescription = Database.GetItemByID(Config.CategoryTable, Category, "Description")
         Dim CountItems = Database.GetCountItem(CatName)
         Dim ArrayItems(CountItems) As String
-        ArrayItems(0) = CatName + ";" + CatCaption + ";;;" + CatIsTileGrid
+        ArrayItems(0) = CatName + ";" + CatCaption + ";" + CatDescription + ";;" + CatIsTileGrid
         For index = 1 To CountItems
             Dim Caption = Database.GetItemByID(CatName, index, "Caption")
             Dim Description = Database.GetItemByID(CatName, index, "Description")
@@ -74,6 +78,26 @@ Partial Class Page_PhotoProcessor
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayItems)
+    End Function
+    Private Function GetCountView() As String
+        Database.DatabaseOpen()
+        Dim CountCategory As Integer = Database.GetCountItem(Config.CategoryTable)
+        Dim MainArray(CountCategory) As String
+        MainArray(0) = "statistics;Статистика"
+        For Index = 1 To CountCategory
+            Dim CategoryName = Database.GetItemByID(Config.CategoryTable, Index, "Name")
+        Dim CountItemCategory As Integer = Database.GetCountItem(CategoryName)
+        Dim ArrayItems(CountItemCategory) As String
+        For NumberItem = 1 To CountItemCategory
+            Dim CountView As String = Database.GetItemByID(CategoryName, NumberItem, "Viewed")
+            Dim Caption = Database.GetItemByID(CategoryName, NumberItem, "Caption")
+            ArrayItems(NumberItem) = CategoryName + ";" + NumberItem.ToString + ";" + Caption + ";" + CountView
+        Next NumberItem
+        MainArray(Index) = String.Join("&", ArrayItems)
+        Next Index
+        Database.DatabaseClose()
+        Dim ResponseStr = String.Join("&", MainArray)
+        Return ResponseStr
     End Function
     Private Function GetNotesPreview() As String
         Database.DatabaseOpen()
@@ -106,8 +130,8 @@ Partial Class Page_PhotoProcessor
     End Function
     Private Function GetPhotosList() As String
         Database.DatabaseOpen()
-        CatNumber = Val(CatNumber) + 1
-        Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
+        Category = Val(Category) + 1
+        Dim NameCategory As String = Database.GetItemByID(Config.CategoryTable, Category, "Name")
         Database.DatabaseClose()
         Dim Path As String = Config.GetAppPath() + "\public\Pictures\" + NameCategory + "\Album" + AlbumID + "Preview"
         Try
@@ -120,25 +144,6 @@ Partial Class Page_PhotoProcessor
         Catch ex As Exception
             Return ""
         End Try
-    End Function
-    Private Function GetCountView() As String
-        Database.DatabaseOpen()
-        Dim CountCategory As Integer = Database.GetCountItem(Config.CategoryTable)
-        Dim MainArray(CountCategory) As String
-        For Index = 1 To CountCategory
-            Dim CategoryName = Database.GetItemByID(Config.CategoryTable, Index, "Name")
-            Dim CountItemCategory As Integer = Database.GetCountItem(CategoryName)
-            Dim ArrayItems(CountItemCategory) As String
-            For NumberItem = 1 To CountItemCategory
-                Dim CountView As String = Database.GetItemByID(CategoryName, NumberItem, "Viewed")
-                Dim Caption = Database.GetItemByID(CategoryName, NumberItem, "Caption")
-                ArrayItems(NumberItem) = CategoryName + ";" + NumberItem.ToString + ";" + Caption + ";" + CountView
-            Next NumberItem
-            MainArray(Index) = String.Join("&", ArrayItems)
-        Next Index
-        Database.DatabaseClose()
-        Dim ResponseStr = String.Join("&", MainArray)
-        Return ResponseStr
     End Function
     Private Function GetDescFromDB() As String
         Dim ResponseString As String = ""
