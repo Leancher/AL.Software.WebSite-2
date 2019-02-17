@@ -7,13 +7,13 @@ export function Header(props) {
   return (
     <div className="header">
       <div className="HeaderTitle">
-        <a href={config.defaultPage}>
+        <a href="/">
           <img src={'./Pictures/Logo/' + logoName + '.png'} alt="logo" />
           LEANCHER
         </a>
       </div>
       <div className="HeaderMenu">
-        <a href="#linkStat" className="HeaderMenuItem">
+        <a href="\?cat=statistics" className="HeaderMenuItem">
           Статистика
         </a>
         <br />

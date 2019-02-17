@@ -7,6 +7,7 @@ import { CurrentCategory } from './CurrentCategory';
 import { PhotoViewer } from './PhotoViewer';
 import { Article } from './Article';
 import { MyNotes } from './MyNotes';
+import { Statistics } from './Statistics';
 const { name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = config;
 
 export class ContentPage extends React.Component {
@@ -26,7 +27,7 @@ export class ContentPage extends React.Component {
 
   setContent() {
     const subCategory = this.state.curCategory[this.subCatNum];
-    console.log(subCategory);
+
     const components = [];
     // Если номер подкатегории не равен 0, то показываем подкатегорию
     if (Number(this.subCatNum) > 0) {
@@ -41,7 +42,9 @@ export class ContentPage extends React.Component {
       }
     }
     // Номер категории больше 0 и нет подкатегории, показываем список подкатегорий этой категории
-    if (Number(this.catNum) > 0 && Number(this.subCatNum) === 0) {
+    if (Number(this.catNum) !== 0 && Number(this.subCatNum) === 0) {
+      console.log(this.catNum);
+      if (this.catNum === 'statistics') components.push(<Statistics key={this.catNum} />);
       if (this.catIsTileGrid === '1') {
         components.push(
           <CurrentCategory subCategory={this.state.curCategory} catNum={this.catNum} key={this.catNum} />

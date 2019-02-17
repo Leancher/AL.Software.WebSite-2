@@ -2,8 +2,8 @@ export const config = {
   siteName: 'Leancher Web site',
   defaultPage: '/index.html',
   picFolder: './Pictures',
-  //serverUrl: 'http://localhost:53492/Server.aspx',
-  serverUrl: 'http://192.168.0.100:8090/Server.aspx',
+  serverUrl: 'http://localhost:53492/Server.aspx',
+  //serverUrl: 'http://192.168.0.100:8090/Server.aspx',
   name: 0,
   caption: 1,
   description: 2,
@@ -17,8 +17,7 @@ export const mainPageProps = {
   description: 'Главная страница сайта'
 };
 
-export const buildLink = (cat, subCat) =>
-  window.location.origin + config.defaultPage + '?cat=' + cat + '&subcat=' + subCat;
+export const buildLink = (cat, subCat) => window.location.origin + '/?cat=' + cat + '&subcat=' + subCat;
 
 export const getCategoryNumber = () => {
   const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
@@ -51,19 +50,6 @@ export const serverRequest = (command, cat = '', album = '', note = '') => {
   return httpGet(config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album + '&note=' + note);
 };
 
-export function requestData(responseHandler, catNum) {
-  const requestList = [];
-  requestList[0] = serverRequest('getCategoriesList');
-  requestList[1] = serverRequest('getCurrentCategory', catNum);
-  Promise.all(requestList).then(response => {
-    responseHandler(
-      response.map(item => {
-        return (item = parseCompositeString(item));
-      })
-    );
-  });
-}
-
 export function getCurrentCategory(responseHandler, catNum) {
   serverRequest('getCurrentCategory', catNum).then(response => {
     responseHandler(parseCompositeString(response));
@@ -95,6 +81,13 @@ export function getNotesPreview(responseHandler) {
 export function getSingleNote(responseHandler, note) {
   serverRequest('getSingleNote', '', '', note).then(response => {
     responseHandler(response);
+    return;
+  });
+}
+
+export function getCountView(responseHandler, note) {
+  serverRequest('getCountView').then(response => {
+    responseHandler(parseCompositeString(response));
     return;
   });
 }

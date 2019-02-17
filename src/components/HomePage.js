@@ -3,8 +3,6 @@ import { buildLink, getCategoriesList } from './utilites';
 import { Header } from './Header';
 import { headTags } from './HeadTags';
 
-// const { siteName, name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = config;
-
 export class HomePage extends React.Component {
   state = {
     isLoading: false,

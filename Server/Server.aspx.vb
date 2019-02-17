@@ -31,7 +31,7 @@ Partial Class Page_PhotoProcessor
                 ResponseString = GetDataFromExif()
             Case "DescriptionAlbum"
                 ResponseString = GetDescriptionAlbum()
-            Case "GetCountView"
+            Case "getCountView"
                 ResponseString = GetCountView()
             Case "getNotesPreview"
                 ResponseString = GetNotesPreview()
@@ -122,29 +122,23 @@ Partial Class Page_PhotoProcessor
         End Try
     End Function
     Private Function GetCountView() As String
-        Dim Index As Integer = 0
-        Dim ResponseString As String = ""
-        Dim CountCategory As Integer
-        Dim CountItemCategory As Integer
-        Dim CountView As String
         Database.DatabaseOpen()
-        CountCategory = Database.GetCountItem(Config.CategoryTable)
+        Dim CountCategory As Integer = Database.GetCountItem(Config.CategoryTable)
+        Dim MainArray(CountCategory) As String
         For Index = 1 To CountCategory
-            Dim CategoryName = Database.GetItemByID(Config.CategoryTable, CatNumber, "Name")
-            CountItemCategory = Database.GetCountItem(CategoryName)
-            Dim NumberItem As Integer
+            Dim CategoryName = Database.GetItemByID(Config.CategoryTable, Index, "Name")
+            Dim CountItemCategory As Integer = Database.GetCountItem(CategoryName)
+            Dim ArrayItems(CountItemCategory) As String
             For NumberItem = 1 To CountItemCategory
-                CountView = Database.GetItemByID(CategoryName, NumberItem, "Viewed")
-                If CountView <> "0" Then
-                    Dim Caption = Database.GetItemByID(CategoryName, NumberItem, "Caption")
-                    Dim item = CategoryName + ";" + NumberItem.ToString + ";" + Caption + ";" + CountView
-                    ResponseString = ResponseString + "|" + item
-                End If
+                Dim CountView As String = Database.GetItemByID(CategoryName, NumberItem, "Viewed")
+                Dim Caption = Database.GetItemByID(CategoryName, NumberItem, "Caption")
+                ArrayItems(NumberItem) = CategoryName + ";" + NumberItem.ToString + ";" + Caption + ";" + CountView
             Next NumberItem
+            MainArray(Index) = String.Join("&", ArrayItems)
         Next Index
-        ResponseString = Right(ResponseString, ResponseString.Length - 1)
         Database.DatabaseClose()
-        Return ResponseString
+        Dim ResponseStr = String.Join("&", MainArray)
+        Return ResponseStr
     End Function
     Private Function GetDescFromDB() As String
         Dim ResponseString As String = ""
