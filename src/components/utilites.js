@@ -2,8 +2,8 @@ export const config = {
   siteName: 'Leancher Web site',
   defaultPage: '/index.html',
   picFolder: './Pictures',
-  //serverUrl: 'http://localhost:53492/Server.aspx',
-  serverUrl: 'http://192.168.0.100:8090/Server.aspx',
+  serverUrl: 'http://localhost:53492/Server.aspx',
+  //serverUrl: 'http://192.168.0.100:8090/Server.aspx',
   name: 0,
   caption: 1,
   description: 2,
@@ -17,7 +17,7 @@ export const mainPageProps = {
   description: 'Главная страница сайта'
 };
 
-export const buildLink = (cat, subCat = 0) => window.location.origin + '/?cat=' + cat + '&subcat=' + subCat;
+export const buildLink = (cat, subCat = 0) => window.location.origin + '/?cat=' + cat + '&subСat=' + subCat;
 
 export const parseQueryString = param => {
   const arrayQS = require('url').parse(window.location.search, { parseQueryString: true }).query;
@@ -25,7 +25,7 @@ export const parseQueryString = param => {
   const arrayParams = {};
   !keys[0] ? (arrayParams.cat = 0) : (arrayParams.cat = arrayQS[keys[0]]);
   !keys[1] ? (arrayParams.subCat = 0) : (arrayParams.subCat = arrayQS[keys[1]]);
-  console.log(arrayParams);
+  //console.log(arrayParams);
   return arrayParams[param];
 };
 

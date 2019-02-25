@@ -47,13 +47,13 @@ Partial Class Page_PhotoProcessor
         Database.DatabaseOpen()
         Dim CountCategory = Database.GetCountItem(Config.CategoryTable)
         Dim ArrayCats(CountCategory - 1) As String
-        For index = 1 To CountCategory
+        For index = 0 To CountCategory - 1
             Dim Name = Database.GetItemByID(Config.CategoryTable, index, "Name")
             Dim Caption = Database.GetItemByID(Config.CategoryTable, index, "Caption")
             Dim IsTileGrid = Database.GetItemByID(Config.CategoryTable, index, "IsTileGrid")
             Dim IsPhotoAlbum = Database.GetItemByID(Config.CategoryTable, index, "IsPhotoAlbum")
             Dim Description = Database.GetItemByID(Config.CategoryTable, index, "Description")
-            ArrayCats(index - 1) = Name + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsTileGrid
+            ArrayCats(index) = Name + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsTileGrid
         Next index
         Database.DatabaseClose()
         Return String.Join("&", ArrayCats)
@@ -61,7 +61,6 @@ Partial Class Page_PhotoProcessor
     Private Function GetCategory() As String
         Database.DatabaseOpen()
         If Category = "" Then Return ""
-        Category = Val(Category) + 1
         Dim CatName As String = Database.GetItemByID(Config.CategoryTable, Category, "Name")
         Dim CatCaption As String = Database.GetItemByID(Config.CategoryTable, Category, "Caption")
         Dim CatIsTileGrid = Database.GetItemByID(Config.CategoryTable, Category, "IsTileGrid")
@@ -84,16 +83,24 @@ Partial Class Page_PhotoProcessor
         Dim CountCategory As Integer = Database.GetCountItem(Config.CategoryTable)
         Dim MainArray(CountCategory) As String
         MainArray(0) = "statistics;Статистика"
-        For Index = 1 To CountCategory
+        For Index = 0 To CountCategory - 1
             Dim CategoryName = Database.GetItemByID(Config.CategoryTable, Index, "Name")
-        Dim CountItemCategory As Integer = Database.GetCountItem(CategoryName)
-        Dim ArrayItems(CountItemCategory) As String
-        For NumberItem = 1 To CountItemCategory
-            Dim CountView As String = Database.GetItemByID(CategoryName, NumberItem, "Viewed")
-            Dim Caption = Database.GetItemByID(CategoryName, NumberItem, "Caption")
-            ArrayItems(NumberItem) = CategoryName + ";" + NumberItem.ToString + ";" + Caption + ";" + CountView
-        Next NumberItem
-        MainArray(Index) = String.Join("&", ArrayItems)
+            Dim CountItemInCategory As Integer = Database.GetCountItem(CategoryName)
+            Dim ArrayItems(CountItemInCategory) As String
+            ArrayItems(0) = ""
+            For NumberItem = 1 To CountItemInCategory
+                Dim CountView As String = Database.GetItemByID(CategoryName, NumberItem, "Viewed")
+                Dim Caption = Database.GetItemByID(CategoryName, NumberItem, "Caption")
+                'Первая таблица - список категорий, начинается с 0
+                If Index = 0 Then
+                    ArrayItems(NumberItem) = NumberItem.ToString + ";" + Caption + ";0;" + CountView
+                Else
+                    ArrayItems(NumberItem) = Index.ToString + ";" + Caption + ";" + NumberItem.ToString + ";" + CountView
+                End If
+                Debug.WriteLine(ArrayItems(NumberItem))
+            Next NumberItem
+            MainArray(Index) = String.Join("&", ArrayItems)
+
         Next Index
         Database.DatabaseClose()
         Dim ResponseStr = String.Join("&", MainArray)

@@ -29,33 +29,35 @@ export class ContentPage extends React.Component {
     curCategory: []
   };
 
-  setContent() {
+  renderCurrentCategory() {
+    if (this.qsCat === 'statistics') return <Statistics statList={this.state.curCategory} key={this.qsCat} />;
+    if (this.catIsTileGrid === '1') {
+      return <CurrentCategory subCategory={this.state.curCategory} catNum={this.qsCat} key={this.qsCat} />;
+    }
+    //Категория "Заметки"
+    if (Number(this.qsCat) === 7) return <MyNotes key={7} />;
+  }
+  renderSubCategory() {
     const components = [];
+    //Подкатегория или ее часть является статьей
+    if (this.catIsTileGrid === '1') {
+      components.push(<Article catName={this.catName} key={0} />);
+    }
+    //Подкатегория является фотоальбомом
+    if (this.isPhotoAlbum === '1') {
+      components.push(<PhotoViewer catName={this.catName} key={1} />);
+    }
+    return components;
+  }
+  selectContent() {
     // Если номер подкатегории не равен 0, то показываем подкатегорию
-    if (Number(this.qsSubCat) > 0) {
-      //headTags(this.catCaption, subCategory[description]);
-      //Подкатегория или ее часть является статьей
-      if (this.catIsTileGrid === '1') {
-        components.push(<Article catName={this.catName} key={0} />);
-      }
-      //Подкатегория является фотоальбомом
-      if (this.isPhotoAlbum === '1') {
-        components.push(<PhotoViewer catName={this.catName} key={1} />);
-      }
+    if (Number(this.qsSubCat) !== 0) {
+      return this.renderSubCategory();
     }
     // Номер категории больше 0 и нет подкатегории, показываем список подкатегорий этой категории
     if (Number(this.qsCat) !== 0 && Number(this.qsSubCat) === 0) {
-      console.log(this.catNum);
-      if (this.catNum === 'statistics') components.push(<Statistics key={this.catNum} />);
-      if (this.catIsTileGrid === '1') {
-        components.push(<CurrentCategory subCategory={this.state.curCategory} catNum={this.catNum} key={this.qsCat} />);
-      }
-      //Категория "Заметки"
-      if (Number(this.catNum) === 7) {
-        components.push(<MyNotes key={7} />);
-      }
+      return this.renderCurrentCategory();
     }
-    return components;
   }
 
   setCatProp() {
@@ -83,21 +85,20 @@ export class ContentPage extends React.Component {
     //Если передана подкатегория, устанавливаем ее свойства
     if (Number(this.qsSubCat) > 0) this.setSubCatProp();
     headTags(this.title, this.catDesc);
-    console.log(this);
     return (
       <React.Fragment>
         <Header catName={this.catName} />
         <NavMenu />
         <div className="ContentBlock">
           <div className="ContentCaption">{this.catCaption}</div>
-          {this.setContent()}
+          {this.selectContent()}
         </div>
       </React.Fragment>
     );
   }
 
   loadData = responseList => {
-    console.log(responseList);
+    //console.log(responseList);
     this.setState({
       isLoading: true,
       curCategory: [...responseList]
