@@ -2,14 +2,14 @@
 Imports System.IO
 Imports System.Diagnostics
 
-Partial Class Page_PhotoProcessor
+Partial Class Server
     Inherits Page
     Private Database As New DatabaseConnect()
+    Private GetDataFromDB As New GetDataFromDB()
     Private AlbumID As String
-    'Private Category As String
     Private Command As String
     Private Category As String
-    Private Sub Page_GetPhotos_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub Server_Load(sender As Object, e As EventArgs) Handles Me.Load
         Command = Request.QueryString("Command")
         Category = Request.QueryString("cat")
         AlbumID = Request.QueryString("album")
@@ -44,19 +44,16 @@ Partial Class Page_PhotoProcessor
         Response.Write(ResponseString)
     End Sub
     Private Function GetCategoriesList() As String
-        Database.DatabaseOpen()
-        Dim CountCategory = Database.GetCountItem(Config.CategoryTable)
-        Dim ArrayCats(CountCategory - 1) As String
-        For index = 0 To CountCategory - 1
-            Dim Name = Database.GetItemByID(Config.CategoryTable, index, "Name")
-            Dim Caption = Database.GetItemByID(Config.CategoryTable, index, "Caption")
-            Dim IsTileGrid = Database.GetItemByID(Config.CategoryTable, index, "IsTileGrid")
-            Dim IsPhotoAlbum = Database.GetItemByID(Config.CategoryTable, index, "IsPhotoAlbum")
-            Dim Description = Database.GetItemByID(Config.CategoryTable, index, "Description")
-            ArrayCats(index) = Name + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsTileGrid
-        Next index
-        Database.DatabaseClose()
-        Return String.Join("&", ArrayCats)
+        Dim NameList As String() = GetDataFromDB.GetCategoriesNameList()
+        For Index = 0 To NameList.Count - 1
+            Dim Name = NameList(Index)
+            Dim Caption = GetDataFromDB.GetCaptionCategory(Name)
+            Dim IsTileGrid = GetDataFromDB.GetIsTileGridCategory(Name)
+            Dim IsPhotoAlbum = GetDataFromDB.GetIsPhotoAlbumCategory(Name)
+            Dim Description = GetDataFromDB.GetDescriptionCategory(Name)
+            NameList(Index) = Name + ";" + Caption + ";" + Description + ";" + IsPhotoAlbum + ";" + IsTileGrid
+        Next Index
+        Return String.Join("&", NameList)
     End Function
     Private Function GetCategory() As String
         Database.DatabaseOpen()

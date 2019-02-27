@@ -28,6 +28,7 @@ Public Class DatabaseConnect
     End Sub
 
     Public Function GetCountItem(NameTable As String) As Integer
+        DatabaseOpen()
         Try
             Command = Database.CreateCommand()
             Command.CommandText = "SELECT Count (*) From " + NameTable
@@ -39,6 +40,7 @@ Public Class DatabaseConnect
         Catch ex As Exception
             Return 0
         End Try
+        DatabaseClose()
     End Function
     Public Function GetItemID(NameTable As String, ItemName As String) As String
         Try

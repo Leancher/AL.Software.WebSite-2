@@ -8,7 +8,7 @@
     Public Shared PreviewFolder As String = "Pictures/Preview"
     Public Shared ContentPhotoFolder As String = "Pictures/Content"
     Public Shared ShowError As String = ""
-    Public Shared CategoryTable As String = "Main"
+    Public Shared CategoryTable As String = "CategoryList"
     Public Shared CategoryMain As String = "Main"
     Public Shared SiteTitle As String = "Leancher web site"
 
