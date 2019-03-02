@@ -13,7 +13,7 @@ export function Header(props) {
         </a>
       </div>
       <div className="HeaderMenu">
-        <a href={buildLink('statistics')} className="HeaderMenuItem">
+        <a href={buildLink(8)} className="HeaderMenuItem">
           Статистика
         </a>
         <br />

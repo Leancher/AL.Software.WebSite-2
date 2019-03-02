@@ -1,7 +1,9 @@
 import React from 'react';
-import { buildLink, getCategoriesList } from './utilites';
+import { config, buildLink, getCategoriesList } from './utilites';
 import { Header } from './Header';
 import { headTags } from './HeadTags';
+
+const { name, caption } = config;
 
 export class HomePage extends React.Component {
   state = {
@@ -12,14 +14,15 @@ export class HomePage extends React.Component {
   renderCategoryGrid() {
     headTags();
     return this.state.categoriesList.map((element, index) => {
-      if (index === 0) return '';
+      //Не показывать: 0 - главная, страница, 8 - статистика
+      if (index === 0 || index === 8) return '';
       return (
         <div key={index} className="TileCell">
           <a href={buildLink(index, 0)}>
             <div className="TileCellPic">
-              <img src={'./Pictures/Main/' + element[0] + '.png'} alt="alt" />
+              <img src={'./Pictures/Main/' + element[name] + '.png'} alt="alt" />
             </div>
-            <div className="TileCellCaption">{element[1]}</div>
+            <div className="TileCellCaption">{element[caption]}</div>
           </a>
         </div>
       );

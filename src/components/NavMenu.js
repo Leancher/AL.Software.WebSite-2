@@ -1,5 +1,6 @@
 import React from 'react';
-import { buildLink, getCategoriesList } from './utilites';
+import { config, buildLink, getCategoriesList } from './utilites';
+const { caption } = config;
 
 export class NavMenu extends React.Component {
   state = {
@@ -8,11 +9,14 @@ export class NavMenu extends React.Component {
   };
 
   renderMenuList() {
-    return this.state.categoriesList.map((element, index) => (
-      <a href={buildLink(index, 0)} key={index}>
-        {element[1]}
-      </a>
-    ));
+    return this.state.categoriesList.map((element, index) => {
+      if (index === 8) return '';
+      return (
+        <a href={buildLink(index, 0)} key={index}>
+          {element[caption]}
+        </a>
+      );
+    });
   }
 
   loadData = responseList => {

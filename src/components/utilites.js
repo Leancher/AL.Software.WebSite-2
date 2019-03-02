@@ -1,15 +1,14 @@
 export const config = {
   siteName: 'Leancher Web site',
-  defaultPage: '/index.html',
-  picFolder: './Pictures',
   serverUrl: 'http://localhost:53492/Server.aspx',
   //serverUrl: 'http://192.168.0.100:8090/Server.aspx',
   name: 0,
   caption: 1,
   description: 2,
-  isPhotoAlbum: 3,
-  isTileGrid: 4,
-  isArticle: 4
+  viewed: 3,
+  isPhotoAlbum: 4,
+  isArticle: 5,
+  isTileGrid: 6
 };
 
 export const mainPageProps = {
@@ -25,23 +24,8 @@ export const parseQueryString = param => {
   const arrayParams = {};
   !keys[0] ? (arrayParams.cat = 0) : (arrayParams.cat = arrayQS[keys[0]]);
   !keys[1] ? (arrayParams.subCat = 0) : (arrayParams.subCat = arrayQS[keys[1]]);
-  //console.log(arrayParams);
   return arrayParams[param];
 };
-
-export const getCategoryNumber = () => {
-  const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
-  const key = Object.keys(pair);
-  if (key.length === 0) return 0;
-  return pair[key[0]];
-};
-
-export function getSubCatNumber() {
-  const pair = require('url').parse(window.location.search, { parseQueryString: true }).query;
-  const key = Object.keys(pair);
-  if (!key[1]) return 0;
-  return pair[key[1]];
-}
 
 function httpGet(url) {
   return new Promise((resolve, reject) => {
@@ -56,8 +40,10 @@ function httpGet(url) {
 const parseCompositeString = string => string.split('&').map(item => item.split(';'));
 const parseSimpleString = string => string.split('&');
 
-export const serverRequest = (command, cat = '', album = '', note = '') => {
-  return httpGet(config.serverUrl + '?Command=' + command + '&cat=' + cat + '&album=' + album + '&note=' + note);
+export const serverRequest = (command, cat = '', subCat = '', album = '', note = '') => {
+  return httpGet(
+    config.serverUrl + '?Command=' + command + '&cat=' + cat + '&subCat=' + subCat + '&album=' + album + '&note=' + note
+  );
 };
 
 export function getCurrentCategory(responseHandler, category) {
@@ -74,8 +60,8 @@ export function getCategoriesList(responseHandler) {
   });
 }
 
-export function getPhotosList(responseHandler, catID, albumID) {
-  serverRequest('getPhotosList', catID, albumID).then(response => {
+export function getPhotosList(responseHandler, catNum, subCatNum) {
+  serverRequest('getPhotosList', catNum, subCatNum).then(response => {
     responseHandler(parseSimpleString(response));
     return;
   });

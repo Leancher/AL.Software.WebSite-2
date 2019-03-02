@@ -13,7 +13,6 @@ const { name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = conf
 export class ContentPage extends React.Component {
   constructor(props) {
     super(props);
-    //this.queryString = parseQueryString();
     this.qsCat = parseQueryString('cat');
     this.qsSubCat = parseQueryString('subCat');
     this.catName = 0;
@@ -30,12 +29,12 @@ export class ContentPage extends React.Component {
   };
 
   renderCurrentCategory() {
-    if (this.qsCat === 'statistics') return <Statistics statList={this.state.curCategory} key={this.qsCat} />;
     if (this.catIsTileGrid === '1') {
       return <CurrentCategory subCategory={this.state.curCategory} catNum={this.qsCat} key={this.qsCat} />;
     }
     //Категория "Заметки"
-    if (Number(this.qsCat) === 7) return <MyNotes key={7} />;
+    if (Number(this.qsCat) === 7) return <MyNotes key={this.qsCat} />;
+    if (Number(this.qsCat) === 8) return <Statistics key={this.qsCat} />;
   }
   renderSubCategory() {
     const components = [];
@@ -70,7 +69,8 @@ export class ContentPage extends React.Component {
   }
 
   setSubCatProp() {
-    const subCatProp = this.state.curCategory[this.queryString['subCat']];
+    console.log(this.state.curCategory);
+    const subCatProp = this.state.curCategory[this.qsSubCat];
     //Общие свойства: catName, title
     this.catCaption = subCatProp[caption];
     this.catDesc = subCatProp[description];
@@ -98,7 +98,6 @@ export class ContentPage extends React.Component {
   }
 
   loadData = responseList => {
-    //console.log(responseList);
     this.setState({
       isLoading: true,
       curCategory: [...responseList]

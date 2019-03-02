@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 import { HomePage } from './components/HomePage';
 import { ContentPage } from './components/ContentPage';
-import { getCategoryNumber } from './components/utilites';
+import { parseQueryString } from './components/utilites';
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.catNum = getCategoryNumber();
+    this.catNum = parseQueryString('cat');
   }
 
   render() {

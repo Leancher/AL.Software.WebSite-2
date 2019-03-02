@@ -27,7 +27,7 @@ Public Class DatabaseConnect
         End Try
     End Sub
 
-    Public Function GetCountItem(NameTable As String) As Integer
+    Public Function GetCountItems(NameTable As String) As Integer
         DatabaseOpen()
         Try
             Command = Database.CreateCommand()
@@ -36,11 +36,12 @@ Public Class DatabaseConnect
             ReadItem.Read()
             Item = ReadItem(0)
             ReadItem.Close()
+            DatabaseClose()
             Return CInt(Item)
         Catch ex As Exception
+            DatabaseClose()
             Return 0
         End Try
-        DatabaseClose()
     End Function
     Public Function GetItemID(NameTable As String, ItemName As String) As String
         Try
@@ -74,6 +75,7 @@ Public Class DatabaseConnect
         Return ""
     End Function
     Public Function GetItemByID(NameTable As String, ItemID As String, ItemProperty As String) As String
+        DatabaseOpen()
         Try
             Command = Database.CreateCommand()
             Command.CommandText = "SELECT * FROM " + NameTable + " WHERE ID=" + ItemID
@@ -81,9 +83,11 @@ Public Class DatabaseConnect
             While ReadItem.Read()
                 Item = ReadItem.Item(ItemProperty).ToString
                 ReadItem.Close()
+                DatabaseClose()
                 Return Item
             End While
         Catch ex As Exception
+            DatabaseClose()
             Return ex.ToString
         End Try
         Return ""

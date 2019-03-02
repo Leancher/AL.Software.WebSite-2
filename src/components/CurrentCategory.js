@@ -1,5 +1,6 @@
 import React from 'react';
-import { buildLink } from './utilites';
+import { config, buildLink } from './utilites';
+const { name, caption } = config;
 
 export class CurrentCategory extends React.Component {
   buildTailCell(index, name, caption) {
@@ -24,7 +25,7 @@ export class CurrentCategory extends React.Component {
     return this.props.subCategory.map((item, index) => {
       //Массив начинается с 0, таблицв БД с 1, первый элемент пустой
       if (index === 0) return '';
-      return this.buildTailCell(index, item[0], item[1]);
+      return this.buildTailCell(index, item[name], item[caption]);
     });
   }
 

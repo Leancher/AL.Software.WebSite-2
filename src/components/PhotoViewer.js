@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPhotosList, getSubCatNumber, getCategoryNumber } from './utilites';
+import { getPhotosList, parseQueryString } from './utilites';
 
 export class PhotoViewer extends React.Component {
   constructor(props) {
@@ -12,8 +12,8 @@ export class PhotoViewer extends React.Component {
     this.closeDis = './Pictures/Util/CloseDis.png';
     this.currentPhoto = 0;
     this.catName = '';
-    this.catNum = getCategoryNumber();
-    this.subCatNum = getSubCatNumber();
+    this.qsCat = parseQueryString('cat');
+    this.qsSubCat = parseQueryString('subCat');
   }
   state = {
     isLoading: false,
@@ -30,7 +30,7 @@ export class PhotoViewer extends React.Component {
             <div className="PhotoCell" key={index}>
               <img
                 id="photo"
-                src={'./Pictures/' + this.props.catName + '/Album' + this.subCatNum + 'Preview/' + item}
+                src={'./Pictures/' + this.props.catName + '/Album' + this.qsSubCat + 'Preview/' + item}
                 alt={item}
                 style={{ cursor: 'pointer' }}
                 name={index}
@@ -43,6 +43,7 @@ export class PhotoViewer extends React.Component {
   };
 
   loadPhotosList = response => {
+    console.log(response);
     this.setState({ isLoading: true, photosList: response });
     return this.renderPhotoGrid();
   };
@@ -61,7 +62,7 @@ export class PhotoViewer extends React.Component {
 
   photoLink = () => {
     const link =
-      './Pictures/' + this.props.catName + '/Album' + this.subCatNum + '/' + this.state.photosList[this.currentPhoto];
+      './Pictures/' + this.props.catName + '/Album' + this.qsSubCat + '/' + this.state.photosList[this.currentPhoto];
     return link;
   };
   showNextPhoto(photoPlace) {
@@ -139,7 +140,7 @@ export class PhotoViewer extends React.Component {
         onClick={this.clickButton}
       >
         {this.state.isLoading === false
-          ? getPhotosList(this.loadPhotosList, this.catNum, this.subCatNum)
+          ? getPhotosList(this.loadPhotosList, this.qsCat, this.qsSubCat)
           : this.selectMode()}
       </div>
     );
