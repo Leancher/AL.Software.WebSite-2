@@ -3,7 +3,7 @@ import { config, buildLink, getCategoriesList } from './utilites';
 import { Header } from './Header';
 import { headTags } from './HeadTags';
 
-const { name, caption } = config;
+const { name, caption, description } = config;
 
 export class HomePage extends React.Component {
   state = {
@@ -12,8 +12,9 @@ export class HomePage extends React.Component {
   };
 
   renderCategoryGrid() {
-    headTags();
-    return this.state.categoriesList.map((element, index) => {
+    const categoriesList = this.state.categoriesList;
+    headTags(categoriesList[0][caption], categoriesList[0][description]);
+    return categoriesList.map((element, index) => {
       //Не показывать: 0 - главная, страница, 8 - статистика
       if (index === 0 || index === 8) return '';
       return (
@@ -30,6 +31,7 @@ export class HomePage extends React.Component {
   }
 
   loadData = responseList => {
+    console.log(responseList);
     this.setState({
       isLoading: true,
       categoriesList: [...responseList]

@@ -4,12 +4,12 @@ const { name, caption } = config;
 
 export class CurrentCategory extends React.Component {
   buildTailCell(index, name, caption) {
-    const fileName = name + index + '.jpg';
+    const picName = name + index + '.jpg';
     return (
       <div className="TileCell" key={index}>
         <a href={buildLink(this.props.catNum, index)}>
           <div className="TileCellPic">
-            <img src={'./Pictures/Preview/' + fileName} alt={fileName} />
+            <img src={'./Pictures/Preview/' + picName} alt={picName} />
           </div>
           <div className="TileCellCaption">
             {caption}

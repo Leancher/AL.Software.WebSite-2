@@ -36,18 +36,24 @@ export class ContentPage extends React.Component {
     if (Number(this.qsCat) === 7) return <MyNotes key={this.qsCat} />;
     if (Number(this.qsCat) === 8) return <Statistics key={this.qsCat} />;
   }
+
   renderSubCategory() {
+    console.log('renderSubCategory');
+    console.log('qsSubCat: ' + this.qsSubCat);
+    console.log('this.catIsPhotoAlbum: ' + this.catIsPhotoAlbum);
+    console.log('this.catIsArticle: ' + this.catIsArticle);
     const components = [];
     //Подкатегория или ее часть является статьей
-    if (this.catIsTileGrid === '1') {
+    if (this.catIsArticle === '1') {
       components.push(<Article catName={this.catName} key={0} />);
     }
     //Подкатегория является фотоальбомом
-    if (this.isPhotoAlbum === '1') {
+    if (this.catIsPhotoAlbum === '1') {
       components.push(<PhotoViewer catName={this.catName} key={1} />);
     }
     return components;
   }
+
   selectContent() {
     // Если номер подкатегории не равен 0, то показываем подкатегорию
     if (Number(this.qsSubCat) !== 0) {
@@ -75,7 +81,7 @@ export class ContentPage extends React.Component {
     this.catCaption = subCatProp[caption];
     this.catDesc = subCatProp[description];
     this.catIsTileGrid = subCatProp[isTileGrid];
-    this.isPhotoAlbum = subCatProp[isPhotoAlbum];
+    this.catIsPhotoAlbum = subCatProp[isPhotoAlbum];
     this.catIsArticle = subCatProp[isArticle];
   }
 
@@ -85,6 +91,7 @@ export class ContentPage extends React.Component {
     //Если передана подкатегория, устанавливаем ее свойства
     if (Number(this.qsSubCat) > 0) this.setSubCatProp();
     headTags(this.title, this.catDesc);
+
     return (
       <React.Fragment>
         <Header catName={this.catName} />

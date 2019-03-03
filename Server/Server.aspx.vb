@@ -45,21 +45,29 @@ Partial Class Server
         Dim NameList As String() = GetDataFromDB.GetCategoriesNameList()
         For Index = 0 To NameList.Count - 1
             Dim Name = NameList(Index)
-            NameList(Index) = Name + ";" + GetDataFromDB.GetCategoryProp(Name)
+            NameList(Index) = GetDataFromDB.GetCategoryProp(Index)
         Next Index
         Return String.Join("&", NameList)
     End Function
-    Private Function GetCategory(Number As Integer) As String
-        Dim CatName = GetDataFromDB.GetCategoriesNameList()(Number)
-        Dim SubCategoriesCount As Integer = GetDataFromDB.GetSubCategoriesCount(CatName)
-        Dim ArrayItems(SubCategoriesCount - 1) As String
-        ArrayItems(0) = CatName + ";" + GetDataFromDB.GetCategoryProp(CatName)
-        If (SubCategoriesCount > 1) Then
-            For Index = 1 To SubCategoriesCount - 1
-                ArrayItems(Index) = CatName + ";" + GetDataFromDB.GetCategoryProp(CatName, Index)
+    Private Function GetCategory(CategoryNumber As Integer) As String
+        Dim CatName = GetDataFromDB.GetCategoriesNameList()(CategoryNumber)
+        Dim SubCatCount As Integer = GetDataFromDB.GetSubCategoriesCount(CatName)
+        Dim ArrayItems(SubCatCount - 1) As String
+        ArrayItems(0) = GetDataFromDB.GetCategoryProp(CategoryNumber)
+        If SubCatCount > 1 Then
+            For Index = 1 To SubCatCount - 1
+                ArrayItems(Index) = GetDataFromDB.GetCategoryProp(CategoryNumber, Index)
             Next Index
         End If
         Return String.Join("&", ArrayItems)
+    End Function
+    Private Function GetCountView() As String
+        Dim NameList As String() = GetDataFromDB.GetCategoriesNameList()
+        Dim MainArray(NameList.Count - 1) As String
+        For Index = 0 To NameList.Count - 1
+            MainArray(Index) = GetCategory(Index)
+        Next Index
+        Return String.Join("&", MainArray)
     End Function
     Private Function GetPhotosList() As String
         Dim CatName = GetDataFromDB.GetCategoriesNameList()(CatNumber)
@@ -67,15 +75,6 @@ Partial Class Server
         If Not Directory.Exists(PhotoPath) Then Directory.CreateDirectory(PhotoPath)
         Dim ListPhoto As String() = Directory.GetFiles(PhotoPath, "*.jpg").Select(Function(item) Path.GetFileName(item)).ToArray
         Return String.Join("&", ListPhoto)
-    End Function
-    Private Function GetCountView() As String
-        Dim NameList As String() = GetDataFromDB.GetCategoriesNameList()
-        Dim MainArray(NameList.Count - 1) As String
-        For Index = 0 To NameList.Count - 1
-            Dim CurrentCategory = GetCategory(Index)
-            MainArray(Index) = CurrentCategory
-        Next Index
-        Return String.Join("&", MainArray)
     End Function
     Private Function GetNotesPreview() As String
         Database.DatabaseOpen()

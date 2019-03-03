@@ -5,14 +5,15 @@ Public Class GetDataFromDB
     Sub New()
 
     End Sub
-    Public Function GetCategoryProp(Name As String, Optional Index As Integer = 0) As String
-        Dim Caption = GetCaptionCategory(Name, Index)
-        Dim Description = GetDescriptionCategory(Name, Index)
-        Dim Viewed = GetViewedCategory(Name, Index)
-        Dim IsPhotoAlbum = GetIsPhotoAlbumCategory(Name, Index)
-        Dim IsArticle = GetIsArticleCategory(Name, Index)
-        Dim IsTileGrid = GetIsTileGridCategory(Name, Index)
-        Return Caption + ";" + Description + ";" + Viewed + ";" + IsPhotoAlbum + ";" + IsArticle + ";" + IsTileGrid
+    Public Function GetCategoryProp(Optional CatNum As Integer = 0, Optional SubCatNum As Integer = 0) As String
+        Dim Name = GetCategoriesNameList()(CatNum)
+        Dim Caption = GetCaptionCategory(Name, SubCatNum)
+        Dim Description = GetDescriptionCategory(Name, SubCatNum)
+        Dim Viewed = GetViewedCategory(Name, SubCatNum)
+        Dim IsPhotoAlbum = GetIsPhotoAlbumCategory(Name, SubCatNum)
+        Dim IsArticle = GetIsArticleCategory(Name, SubCatNum)
+        Dim IsTileGrid = GetIsTileGridCategory(Name, SubCatNum)
+        Return Name + ";" + CatNum.ToString + ";" + SubCatNum.ToString + ";" + Caption + ";" + Description + ";" + Viewed + ";" + IsPhotoAlbum + ";" + IsArticle + ";" + IsTileGrid
     End Function
     Function GetCountItems(CategoryName As String) As Integer
         Return Database.GetCountItems(CategoryName)
@@ -27,6 +28,11 @@ Public Class GetDataFromDB
     Function GetNameItem(Index As Integer) As String
         Return Database.GetItemByID(Config.CategoryTable, Index, "Name")
     End Function
+
+    Function GetPropFromDB(f As Action(Of Integer, Integer), CatNum As Integer, SubCatNum As Integer) As String
+        f(CatNum, SubCatNum)
+    End Function
+
     Function GetCaptionCategory(CategoryName As String, Index As Integer) As String
         Return Database.GetItemByID(CategoryName, Index, "Caption")
     End Function
@@ -45,9 +51,7 @@ Public Class GetDataFromDB
     Function GetViewedCategory(CategoryName As String, Index As Integer) As String
         Return Database.GetItemByID(CategoryName, Index, "Viewed")
     End Function
-    Sub WriteDataToConsole(array As String())
-        For Each item In array
-            Debug.WriteLine(item)
-        Next item
-    End Sub
+    Function GetItemByNumber(CatNum As Integer, SubCatNum As Integer, PropName As String) As String
+        Return Database.GetItemByID(CatNum, SubCatNum, PropName)
+    End Function
 End Class

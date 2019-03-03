@@ -3,17 +3,14 @@ export const config = {
   serverUrl: 'http://localhost:53492/Server.aspx',
   //serverUrl: 'http://192.168.0.100:8090/Server.aspx',
   name: 0,
-  caption: 1,
-  description: 2,
-  viewed: 3,
-  isPhotoAlbum: 4,
-  isArticle: 5,
-  isTileGrid: 6
-};
-
-export const mainPageProps = {
-  namePage: 'Главная',
-  description: 'Главная страница сайта'
+  catNum: 1,
+  subCatNum: 2,
+  caption: 3,
+  description: 4,
+  viewed: 5,
+  isPhotoAlbum: 6,
+  isArticle: 7,
+  isTileGrid: 8
 };
 
 export const buildLink = (cat, subCat = 0) => window.location.origin + '/?cat=' + cat + '&subСat=' + subCat;

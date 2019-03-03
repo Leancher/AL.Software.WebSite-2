@@ -1,7 +1,7 @@
 import React from 'react';
 import { config, buildLink, getCountView } from './utilites';
 
-const { name, caption, viewed } = config;
+const { catNum, subCatNum, caption, viewed } = config;
 
 export class Statistics extends React.Component {
   state = {
@@ -12,16 +12,17 @@ export class Statistics extends React.Component {
   statListProcess() {
     console.log(this.state.listCountView);
     return this.state.listCountView
-      .filter((item, index) => {
+      .filter(item => {
         if (item.length === 1) return false;
         if (item[viewed] < 10) return false;
         return true;
       })
       .sort((a, b) => b[viewed] - a[viewed])
       .map((item, index) => {
+        console.log(item);
         return (
           <React.Fragment key={index}>
-            <a href={buildLink(item[name])}>{item[caption]}</a> - {item[viewed]}
+            <a href={buildLink(item[catNum], item[subCatNum])}>{item[caption]}</a> - {item[viewed]}
             <br />
           </React.Fragment>
         );
@@ -53,7 +54,7 @@ export class Statistics extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.isLoading === false ? getCountView(this.loadData, this.catNum) : this.renderStatisticsList()}
+        {this.state.isLoading === false ? getCountView(this.loadData) : this.renderStatisticsList()}
       </React.Fragment>
     );
   }
