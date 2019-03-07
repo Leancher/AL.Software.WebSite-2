@@ -1,7 +1,7 @@
 export const config = {
   siteName: 'Leancher Web site',
-  serverUrl: 'http://localhost:53492/Server.aspx',
-  //serverUrl: 'http://192.168.0.100:8090/Server.aspx',
+  //serverUrl: 'http://localhost:53492/Server.aspx',
+  serverUrl: 'http://192.168.0.100:8090/Server.aspx',
   name: 0,
   catNum: 1,
   subCatNum: 2,
