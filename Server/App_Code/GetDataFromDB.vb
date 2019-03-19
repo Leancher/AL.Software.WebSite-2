@@ -28,11 +28,6 @@ Public Class GetDataFromDB
     Function GetNameItem(Index As Integer) As String
         Return Database.GetItemByID(Config.CategoryTable, Index, "Name")
     End Function
-
-    Function GetPropFromDB(f As Action(Of Integer, Integer), CatNum As Integer, SubCatNum As Integer) As String
-        f(CatNum, SubCatNum)
-    End Function
-
     Function GetCaptionCategory(CategoryName As String, Index As Integer) As String
         Return Database.GetItemByID(CategoryName, Index, "Caption")
     End Function

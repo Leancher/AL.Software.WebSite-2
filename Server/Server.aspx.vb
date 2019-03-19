@@ -30,8 +30,6 @@ Partial Class Server
                 ResponseString = GetPhotosList()
             Case "DescriptionPhoto"
                 ResponseString = GetDataFromExif()
-            Case "DescriptionAlbum"
-                ResponseString = GetDescriptionAlbum()
             Case "getCountView"
                 ResponseString = GetCountView()
             Case "getNotesPreview"
@@ -76,6 +74,7 @@ Partial Class Server
         Dim ListPhoto As String() = Directory.GetFiles(PhotoPath, "*.jpg").Select(Function(item) Path.GetFileName(item)).ToArray
         Return String.Join("&", ListPhoto)
     End Function
+
     Private Function GetNotesPreview() As String
         Database.DatabaseOpen()
         Dim TableName = "MyNotes"
@@ -106,21 +105,6 @@ Partial Class Server
         Return ""
     End Function
 
-    Private Function GetDescFromDB() As String
-        Dim ResponseString As String = ""
-        Database.DatabaseOpen()
-        Dim NameTable As String = CatNumber + AlbumID
-        Dim CountIten = Database.GetCountItems(NameTable)
-        Dim Item As String
-        For index = 1 To CountIten
-            Item = Database.GetItemByID(NameTable, index, "Adresse")
-            If Item = Nothing Then Item = "Нет данных"
-            ResponseString = ResponseString + ";" + Item
-        Next index
-        ResponseString = Right(ResponseString, ResponseString.Length - 1)
-        Database.DatabaseClose()
-        Return ResponseString
-    End Function
     Private Function GetDataFromExif() As String
         Dim Path As String = Config.AppPath + "Pictures\" + CatNumber + "\Album" + AlbumID
         Dim ResponseString As String = ""
@@ -139,18 +123,5 @@ Partial Class Server
         End Try
         ResponseString = Right(ResponseString, ResponseString.Length - 1)
         Return ResponseString
-    End Function
-    Private Function GetDescriptionAlbum() As String
-        Dim Path = Config.AppPath + "Content" + "\" + CatNumber + AlbumID + ".txt"
-        Dim txt As String
-        Dim FileInfo As New FileInfo(Path)
-        If FileInfo.Exists = True Then
-            Using reader As New StreamReader(Path)
-                txt = reader.ReadToEnd()
-            End Using
-        Else
-            txt = ""
-        End If
-        Return txt
     End Function
 End Class
