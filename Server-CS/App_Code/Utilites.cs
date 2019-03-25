@@ -16,14 +16,4 @@ public class Utilites
         DirectoryInfo DirInfo = new DirectoryInfo(Path);
         return DirInfo.Parent.FullName;
     }
-
-    public static Hashtable QueryStringParser(NameValueCollection QueryString)
-    {
-        return new Hashtable
-        {
-            { "Command", QueryString.Get("Command") },
-            { "CatNumber", QueryString.Get("cat") },
-            { "SubCatNumber", QueryString.Get("subCat") }
-        };
-    }
 }

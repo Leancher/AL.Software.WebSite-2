@@ -9,6 +9,8 @@ public partial class Server : Page
         //Debug.WriteLine("Hello");
         RequestHandler RequestHandler = new RequestHandler(Request.QueryString);
         Response.AppendHeader("Access-Control-Allow-Origin", "*");
-        string ResponseString = "";
+        string ResponseString = RequestHandler.GetResponseString();
+
+        Response.Write(ResponseString);
     }
 }
