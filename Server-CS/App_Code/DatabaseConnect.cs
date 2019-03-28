@@ -7,37 +7,43 @@ using System.Data.SQLite;
 public class DatabaseConnect
 {
     SQLiteConnection Database = new SQLiteConnection();
-    SQLiteCommand Command = new SQLiteCommand ();
+    SQLiteCommand Command = new SQLiteCommand();
     public DatabaseConnect()
     {
-        string DBPath = Utilites.GetAppPath() + @"\" + "Server" + @"\" + "Database.db";        
+
+    }
+    void DatabaseOpen()
+    {
+        string DBPath = Utilites.GetAppPath() + @"\" + "Server-CS" + @"\" + "Database.db";        
         Database = new SQLiteConnection("Data Source=" + DBPath + "; Version=3;");
+        Database.Open();
     }
     public int GetCountItems(string NameTable)
     {
-        Database.Open();
+        DatabaseOpen();
         Command = Database.CreateCommand();
         Command.CommandText = "SELECT Count (*) From " + NameTable;
         SQLiteDataReader ReadItem = Command.ExecuteReader();
         ReadItem.Read();
-        int Item = (int)ReadItem[0];
+        int Item = 0;
+        int.TryParse(ReadItem[0].ToString(), out Item);
         ReadItem.Close();
         Database.Dispose();
         return Item;
     }
     public string GetItemByID(string NameTable, int ItemID, string Prop)
     {
-        Database.Open();
+        DatabaseOpen();
         Command = Database.CreateCommand();
         Command.CommandText = "SELECT * FROM " + NameTable + " WHERE ID=" + ItemID.ToString();
         SQLiteDataReader ReadItem = Command.ExecuteReader();
         while(ReadItem.Read())
-            {
-                string Item = (string)ReadItem.GetValue(0);
-                ReadItem.Close();
-                Database.Dispose();
-                return Item;
-            }
+        {
+            string Item = ReadItem.GetValue(0).ToString();
+            ReadItem.Close();
+            Database.Dispose();
+            return Item;
+        }
         return "";
     }
 }

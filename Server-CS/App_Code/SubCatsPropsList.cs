@@ -5,21 +5,24 @@ using System.Web;
 
 public class SubCatsPropsList : Category
 {
-    int CategoryNumber = 0;
+    private readonly int CategoryNumber = 0;
 
-    public SubCatsPropsList(int Number) : base (Number)
+    public SubCatsPropsList(int CategoryNumber) : base (CategoryNumber)
     {
-        CategoryNumber = Number;
+        this.CategoryNumber = CategoryNumber;
     }
 
-    public string GetSubCatsPropsList()
+    public string GetSubCatsPropsList
     {
-        string[] PropsList = new string[EntriesCount];
-        PropsList[0] = GetCategoryProps(CategoryNumber);
-        for (int Index = 1; Index < EntriesCount; Index++)
+        get
         {
-            PropsList[Index] = GetCategoryProps(Index);
+            string[] PropsList = new string[EntriesCount];
+            PropsList[0] = GetCategoryProps(CategoryNumber);
+            for (int Index = 1; Index < EntriesCount; Index++)
+            {
+                PropsList[Index] = GetCategoryProps(Index);
+            }
+            return string.Join("&", PropsList);
         }
-        return string.Join("&", PropsList);
     }
 }

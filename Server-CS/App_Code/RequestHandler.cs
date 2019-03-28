@@ -1,48 +1,61 @@
 ﻿using System.Collections.Specialized;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Collections;
 
 public class RequestHandler
 {
     string Command = "";
-    int CatNumber = 0;
+    int CategoryNumber = 0;
     int SubCatNumber = 0;
-    delegate string DelegateCommandHandler(int Number);
+    delegate string DelegateCommandHandler();
     NameValueCollection QueryString;
-
-    Dictionary<string, DelegateCommandHandler> Commands = new Dictionary<string, DelegateCommandHandler>
-    {
-        {"getCategoriesList", GetCategoriesList },
-        {"getCurrentCategory", GetCurrentCategory }
-    };
+    Dictionary<string, DelegateCommandHandler> Commands = new Dictionary<string, DelegateCommandHandler>();
 
     public RequestHandler(NameValueCollection QueryString)
-    {      
-        this.QueryString = QueryString;
-    }
-
-    void QueryStringParser()
     {
-        Command = QueryString.Get("Command");
-        CatNumber = int.Parse(QueryString.Get("cat"));
-        SubCatNumber = int.Parse(QueryString.Get("subCat"));
+
+        this.QueryString = QueryString;
     }
 
     public string GetResponseString()
     {
-        QueryStringParser();
+        InitCommands();
+        QueryStringParser();      
         DelegateCommandHandler CommandHandler;
-        CommandHandler = Commands[Command];
-        string Result = CommandHandler(CatNumber);
-        return Result;
+        if (Commands.ContainsKey(Command))
+        {
+            CommandHandler = Commands[Command];
+            return CommandHandler();
+        }
+
+        return "Wrong command";
     }
 
-    private static string GetCategoriesList(int Number)
+    void InitCommands()
     {
-        return "";
+        Commands.Add("getCategoriesList", GetCatsPropsList);
+        Commands.Add("getCurrentCategory", GetCurrentCategory);
     }
 
-    private static string GetCurrentCategory(int Number)
+    void QueryStringParser()
     {
-        return "";
+        //Устанавливаем значение по-умолчанию        
+        Command = QueryString.Get("Command");
+        if (Command == null) Command = "default";
+        int.TryParse(QueryString.Get("cat"), out CategoryNumber);
+        int.TryParse(QueryString.Get("subCat"), out SubCatNumber);
+    }
+
+    private string GetCatsPropsList()
+    {
+        CatsPropsList CatsPropsList = new CatsPropsList();
+        return CatsPropsList.GetCatsPropsList();
+    }
+
+    private string GetCurrentCategory()
+    {
+        SubCatsPropsList SubCatsPropsList = new SubCatsPropsList(CategoryNumber);
+        return SubCatsPropsList.GetSubCatsPropsList;
     }
 }
