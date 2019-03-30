@@ -29,6 +29,7 @@ export class ContentPage extends React.Component {
   };
 
   renderCurrentCategory() {
+    console.log('this.catIsTileGrid: ' + this.catIsTileGrid);
     if (this.catIsTileGrid === '1') {
       return <CurrentCategory subCategory={this.state.curCategory} catNum={this.qsCat} key={this.qsCat} />;
     }
@@ -60,7 +61,9 @@ export class ContentPage extends React.Component {
       return this.renderSubCategory();
     }
     // Номер категории больше 0 и нет подкатегории, показываем список подкатегорий этой категории
+
     if (Number(this.qsCat) !== 0 && Number(this.qsSubCat) === 0) {
+      console.log(this.qsCat + ', ' + this.qsSubCat);
       return this.renderCurrentCategory();
     }
   }
@@ -91,7 +94,6 @@ export class ContentPage extends React.Component {
     //Если передана подкатегория, устанавливаем ее свойства
     if (Number(this.qsSubCat) > 0) this.setSubCatProp();
     headTags(this.title, this.catDesc);
-
     return (
       <React.Fragment>
         <Header catName={this.catName} />
@@ -105,6 +107,7 @@ export class ContentPage extends React.Component {
   }
 
   loadData = responseList => {
+    console.log(responseList);
     this.setState({
       isLoading: true,
       curCategory: [...responseList]

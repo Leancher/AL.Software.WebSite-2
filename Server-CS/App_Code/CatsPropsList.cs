@@ -7,7 +7,7 @@
 
     public string GetCatsPropsList()
     {
-        string[] PropsList = new string[EntriesCount - 1];
+        string[] PropsList = new string[EntriesCount];
         for (int Index=0; Index < EntriesCount; Index++)
         {
             PropsList[Index] = GetCategoryProps(Index);

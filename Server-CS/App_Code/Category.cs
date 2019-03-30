@@ -6,15 +6,16 @@ using System.Web;
 public class Category
 {
     DatabaseConnect Database = new DatabaseConnect();
+    const int FieldsCount = 9;
     const int pName = 0;
     const int pCatNumber = 1;
     const int pSubCatNumber = 2;
     const int pCaption = 3;
-    const int pIsTileGrid = 4;
-    const int pIsPhotoAlbum = 5;
-    const int pDescription = 6;
+    const int pDescription = 4;
+    const int pViewed = 5;
+    const int pIsPhotoAlbum = 6;    
     const int pIsArticle = 7;
-    const int pViewed = 8;
+    const int pIsTileGrid = 8;
 
     string EntrySource = "";
    
@@ -30,9 +31,11 @@ public class Category
 
     public string GetCategoryProps(int CatNumber, int Number = 0)
     {
-        string[] CatsPropsList = new string[8];
+        string[] CatsPropsList = new string[FieldsCount];
         string Name = GetNameCategory(CatNumber);
         CatsPropsList[pName] = Name;
+        CatsPropsList[pCatNumber] = CatNumber.ToString();
+        CatsPropsList[pSubCatNumber] = Number.ToString();
         CatsPropsList[pCaption] = Database.GetItemByID(Name, Number, "Caption");
         CatsPropsList[pIsTileGrid] = Database.GetItemByID(Name, Number, "IsTileGrid");
         CatsPropsList[pIsPhotoAlbum] = Database.GetItemByID(Name, Number, "IsPhotoAlbum");
@@ -44,7 +47,7 @@ public class Category
 
     private string GetNameCategory(int Index)
     {
-        return Database.GetItemByID(EntrySource, Index, "Name");
+        return Database.GetItemByID(Utilites.CategoryTable, Index, "Name");
     }    
     
     public int EntriesCount

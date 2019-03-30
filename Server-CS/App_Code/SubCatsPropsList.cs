@@ -20,7 +20,7 @@ public class SubCatsPropsList : Category
             PropsList[0] = GetCategoryProps(CategoryNumber);
             for (int Index = 1; Index < EntriesCount; Index++)
             {
-                PropsList[Index] = GetCategoryProps(Index);
+                PropsList[Index] = GetCategoryProps(CategoryNumber, Index);
             }
             return string.Join("&", PropsList);
         }

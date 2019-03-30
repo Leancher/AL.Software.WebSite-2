@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Diagnostics;
 using System.Data.SQLite;
 
 public class DatabaseConnect
@@ -39,7 +36,8 @@ public class DatabaseConnect
         SQLiteDataReader ReadItem = Command.ExecuteReader();
         while(ReadItem.Read())
         {
-            string Item = ReadItem.GetValue(0).ToString();
+            int NumberColumn = ReadItem.GetOrdinal(Prop);
+            string Item = ReadItem.GetValue(NumberColumn).ToString();
             ReadItem.Close();
             Database.Dispose();
             return Item;
