@@ -31,7 +31,6 @@ export class HomePage extends React.Component {
   }
 
   loadData = responseList => {
-    console.log(responseList);
     this.setState({
       isLoading: true,
       categoriesList: [...responseList]

@@ -14,7 +14,7 @@ export class CurrentCategory extends React.Component {
           <div className="TileCellCaption">
             {caption}
             <br />
-            {caption.length < 40 ? <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> : null}
+            {caption.length < 28 ? <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> : null}
           </div>
         </a>
       </div>
