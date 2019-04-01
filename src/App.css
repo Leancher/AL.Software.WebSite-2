@@ -7,19 +7,59 @@
   --GlobalWidth: 94%;
   --GlobalFont: Calibri;
   --HeaderHeight: 108px;
+  --NavMenuWidth: 178px;
+}
+
+.MainContainer {
+  font-family: var(--GlobalFont);
+  display: grid;
+  width: var(--GlobalWidth);
+  height: 100%;
+  margin-top: 9px;
+  margin-left: var(--GlobalMarginLeft);
+  grid-template-columns: var(--NavMenuWidth) 1fr;
+  grid-template-rows: var(--HeaderHeight) 1fr;
 }
 
 .header {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
   display: flex;
   align-items: center;
-  margin-top: 9px;
-  height: var(--HeaderHeight);
   background-color: var(--MyYellow);
+}
+
+.TileGrid {
+  grid-column: 1 / 3;
+  grid-row: 2 / 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.MainMenuLocate {
+  grid-column: 1 / 1;
+  grid-row: 2 / 2;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 18px;
+}
+
+.ContentBlock {
+  grid-column: 2 / 3;
+  grid-row: 2 / 2;
+  display: inline-block;
+  margin-top: 18px;
+  margin-left: 18px;
 }
 
 .HeaderTitle {
   padding-left: 18px;
 }
+
 .HeaderTitle a {
   font-family: var(--GlobalFont);
   font-weight: bold;
@@ -40,36 +80,6 @@
   font: bold 1.1em var(--GlobalFont);
   color: var(--MyDarkGrey);
   text-decoration: none;
-}
-
-.Body {
-  font-family: var(--GlobalFont);
-  width: var(--GlobalWidth);
-  height: 100%;
-  margin-left: var(--GlobalMarginLeft);
-}
-
-.TileGrid {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  align-content: space-around;
-}
-
-.MainMenuLocate {
-  display: inline-block;
-  width: 178px;
-  vertical-align: top;
-  margin-top: 18px;
-}
-
-.ContentBlock {
-  display: inline-block;
-  width: calc(100% - 202px);
-  margin-top: 18px;
-  margin-left: 18px;
 }
 
 .ContentCaption {

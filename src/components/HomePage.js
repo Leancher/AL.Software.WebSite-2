@@ -41,8 +41,8 @@ export class HomePage extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <img src="./Pictures/Main/background.jpg" alt="background" width="100%" />
         <div className="TileGrid">
+          <img src="./Pictures/Main/background.jpg" alt="background" width="100%" />
           {this.state.isLoading === false ? getCategoriesList(this.loadData) : this.renderCategoryGrid()}
         </div>
       </React.Fragment>
