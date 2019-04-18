@@ -3,57 +3,19 @@
   --MyDarkGrey: #3e454c;
   --MyMiddleGrey: #828282;
   --MyLightGrey: #f6f6f6;
-  --GlobalMarginLeft: 2%;
-  --GlobalWidth: 94%;
   --GlobalFont: Calibri;
-  --HeaderHeight: 108px;
   --NavMenuWidth: 178px;
 }
 
-.MainContainer {
+.container {
+  min-width: 540px;
   font-family: var(--GlobalFont);
-  display: grid;
-  width: var(--GlobalWidth);
   height: 100%;
-  margin-top: 9px;
-  margin-left: var(--GlobalMarginLeft);
-  grid-template-columns: var(--NavMenuWidth) 1fr;
-  grid-template-rows: var(--HeaderHeight) 1fr;
 }
 
 .header {
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
-  display: flex;
-  align-items: center;
   background-color: var(--MyYellow);
-}
-
-.TileGrid {
-  grid-column: 1 / 3;
-  grid-row: 2 / 2;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  align-content: space-around;
-}
-
-.MainMenuLocate {
-  grid-column: 1 / 1;
-  grid-row: 2 / 2;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 18px;
-}
-
-.ContentBlock {
-  grid-column: 2 / 3;
-  grid-row: 2 / 2;
-  display: inline-block;
-  margin-top: 18px;
-  margin-left: 18px;
+  height: 108px;
 }
 
 .HeaderTitle {
@@ -69,17 +31,31 @@
 }
 
 .HeaderMenu {
-  margin-left: auto;
-  margin-right: 18px;
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
 
-.HeaderMenuItem {
-  width: 200px;
-  height: 18px;
+.HeaderMenu a {
   font: bold 1.1em var(--GlobalFont);
   color: var(--MyDarkGrey);
   text-decoration: none;
+}
+
+.TileGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.ContentBlock {
+  display: inline-block;
+  margin-top: 18px;
+  margin-right: 0px;
 }
 
 .ContentCaption {
@@ -89,7 +65,7 @@
   font-weight: bold;
   font-size: 36px;
   background-color: var(--MyLightGrey);
-  width: 100%;
+
   height: 54px;
 }
 
@@ -165,16 +141,21 @@
   margin-top: 18px;
 }
 
+.MenuList {
+}
+
 .MenuList a {
-  width: 160px;
-  height: 54px;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   padding-left: 18px;
   text-decoration: none;
   font: bold 1.1em var(--GlobalFont);
   background-color: var(--MyLightGrey);
   color: Black;
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 
 .MenuList a:hover {

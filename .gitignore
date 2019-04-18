@@ -8,6 +8,8 @@ ThingUSSR/
 Thing90/
 *.lnk
 *.cmd
+css
+js
 
 # User-specific files
 *.suo

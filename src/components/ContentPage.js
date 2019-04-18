@@ -29,7 +29,6 @@ export class ContentPage extends React.Component {
   };
 
   renderCurrentCategory() {
-    console.log('this.catIsTileGrid: ' + this.catIsTileGrid);
     if (this.catIsTileGrid === '1') {
       return <CurrentCategory subCategory={this.state.curCategory} catNum={this.qsCat} key={this.qsCat} />;
     }
@@ -39,10 +38,6 @@ export class ContentPage extends React.Component {
   }
 
   renderSubCategory() {
-    console.log('renderSubCategory');
-    console.log('qsSubCat: ' + this.qsSubCat);
-    console.log('this.catIsPhotoAlbum: ' + this.catIsPhotoAlbum);
-    console.log('this.catIsArticle: ' + this.catIsArticle);
     const components = [];
     //Подкатегория или ее часть является статьей
     if (this.catIsArticle === '1') {
@@ -63,7 +58,6 @@ export class ContentPage extends React.Component {
     // Номер категории больше 0 и нет подкатегории, показываем список подкатегорий этой категории
 
     if (Number(this.qsCat) !== 0 && Number(this.qsSubCat) === 0) {
-      console.log(this.qsCat + ', ' + this.qsSubCat);
       return this.renderCurrentCategory();
     }
   }
@@ -78,7 +72,6 @@ export class ContentPage extends React.Component {
   }
 
   setSubCatProp() {
-    console.log(this.state.curCategory);
     const subCatProp = this.state.curCategory[this.qsSubCat];
     //Общие свойства: catName, title
     this.catCaption = subCatProp[caption];
@@ -97,17 +90,18 @@ export class ContentPage extends React.Component {
     return (
       <React.Fragment>
         <Header catName={this.catName} />
-        <NavMenu />
-        <div className="ContentBlock">
-          <div className="ContentCaption">{this.catCaption}</div>
-          {this.selectContent()}
+        <div class="row">
+          <NavMenu />
+          <div className="col-xl-12 col-lg-9 col-md-9 col-sm-9 col-9 ContentBlock">
+            <div className="ContentCaption">{this.catCaption}</div>
+            {this.selectContent()}
+          </div>
         </div>
       </React.Fragment>
     );
   }
 
   loadData = responseList => {
-    console.log(responseList);
     this.setState({
       isLoading: true,
       curCategory: [...responseList]

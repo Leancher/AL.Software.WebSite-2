@@ -12,7 +12,7 @@ export class NavMenu extends React.Component {
     return this.state.categoriesList.map((element, index) => {
       if (index === 8) return '';
       return (
-        <a href={buildLink(index, 0)} key={index}>
+        <a className="col-xl" href={buildLink(index, 0)} key={index}>
           {element[caption]}
         </a>
       );
@@ -28,8 +28,8 @@ export class NavMenu extends React.Component {
 
   render() {
     return (
-      <div className="MainMenuLocate">
-        <div className="MenuList">
+      <div className="col-xl-12 col-lg-3 col-md-3 col-sm-3 col-3 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 MenuList">
+        <div className="row">
           {this.state.isLoading === false ? getCategoriesList(this.loadData, this.catNum) : this.renderMenuList()}
         </div>
       </div>

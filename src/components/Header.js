@@ -5,21 +5,16 @@ export function Header(props) {
   let logoName = props.catName;
   if (!logoName) logoName = 'Main';
   return (
-    <div className="header">
-      <div className="HeaderTitle">
+    <div className="row justify-content-between header">
+      <div className="col-auto mr-auto HeaderTitle">
         <a href="/">
           <img src={'./Pictures/Logo/' + logoName + '.png'} alt="logo" />
           LEANCHER
         </a>
       </div>
-      <div className="HeaderMenu">
-        <a href={buildLink(8)} className="HeaderMenuItem">
-          Статистика
-        </a>
-        <br />
-        <a href="#linkAbout" className="HeaderMenuItem">
-          О сайте
-        </a>
+      <div className="col-auto HeaderMenu">
+        <a href={buildLink(8)}>Статистика</a>
+        <a href="#linkAbout">О сайте</a>
       </div>
     </div>
   );
