@@ -6,13 +6,13 @@ export function Header(props) {
   if (!logoName) logoName = 'Main';
   return (
     <div className="row justify-content-between header">
-      <div className="col-auto mr-auto HeaderTitle">
+      <div className="HeaderTitle">
         <a href="/">
           <img src={'./Pictures/Logo/' + logoName + '.png'} alt="logo" />
           LEANCHER
         </a>
       </div>
-      <div className="col-auto HeaderMenu">
+      <div className="HeaderMenu">
         <a href={buildLink(8)}>Статистика</a>
         <a href="#linkAbout">О сайте</a>
       </div>

@@ -93,8 +93,10 @@ export class ContentPage extends React.Component {
         <div class="row">
           <NavMenu />
           <div className="col-xl-12 col-lg-9 col-md-9 col-sm-9 col-9 ContentBlock">
-            <div className="ContentCaption">{this.catCaption}</div>
-            {this.selectContent()}
+            <div class="row ">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ContentCaption">{this.catCaption}</div>
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 no-gutters">{this.selectContent()}</div>
+            </div>
           </div>
         </div>
       </React.Fragment>

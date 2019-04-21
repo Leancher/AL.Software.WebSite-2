@@ -103,7 +103,7 @@ export class PhotoViewer extends React.Component {
   renderSinglePhoto() {
     return (
       <React.Fragment>
-        <div className="ButtonLeft">
+        <div className="BtLeftPlace BtPlace">
           <img id="BtPrev" src={this.arrowLDis} alt="BtPrev" className="BtPrev" />
         </div>
         <div className="PhotoPlace">
@@ -114,8 +114,8 @@ export class PhotoViewer extends React.Component {
             alt={this.state.photosList[this.currentPhoto]}
           />
         </div>
-        <div className="ButtonRight">
-          <div className="BtClose">
+        <div className="BtRightPlace BtPlace">
+          <div>
             <img id="BtClose" src={this.closeDis} alt="BtClose" />
           </div>
           <div className="BtNext">

@@ -12,14 +12,14 @@ export default function RepairCar6() {
       мм, установить не получилось. Поставил старые.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar06-01.jpg' alt="pic" />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar06-02.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar06-01.jpg" alt="pic" />
+      <img src="Pictures/Content/RepairCar06-02.jpg" alt="pic" />
       <br />
       Регулятор зазора колодок. Отдельно комплект для правого и левого колес. Подошли все детали.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar06-03.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar06-03.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar06-04.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar06-04.jpg" alt="pic" />
       <br />
     </React.Fragment>
   );

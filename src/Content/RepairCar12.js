@@ -44,14 +44,14 @@ export default function RepairCar11() {
       покрасил Антигравием и фиолетовой краской.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar11-01.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar11-01.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar11-02.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar11-02.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar11-03.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar11-03.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar11-04.jpg' alt="pic" />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar11-05.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar11-04.jpg" alt="pic" />
+      <img src="Pictures/Content/RepairCar11-05.jpg" alt="pic" />
       <br />
     </React.Fragment>
   );

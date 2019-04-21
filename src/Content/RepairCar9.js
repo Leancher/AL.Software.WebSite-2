@@ -9,7 +9,7 @@ export default function RepairCar8() {
       из вариантов, как на фотке. Все исправно работает.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar08-01.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar08-01.jpg" alt="pic" />
     </React.Fragment>
   );
 }

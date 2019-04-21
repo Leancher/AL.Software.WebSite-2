@@ -15,7 +15,7 @@ export default function RepairCar9() {
       Черный провод, идущий на землю подрулевого переключателя отключить от земли и подключить к "плюсу" замка
       зажигания.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar09-01.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar09-01.jpg" alt="pic" />
       <br />
       Для переделки фар нужно подключить взять два новых реле для дальнего и ближнего света.
       <br />
@@ -28,7 +28,7 @@ export default function RepairCar9() {
       <br />
       Далее провод, идущий от катушки реле К8 к плюсу питания, отключить и подключить к минусу.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar09-02.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar09-02.jpg" alt="pic" />
       <br />
     </React.Fragment>
   );

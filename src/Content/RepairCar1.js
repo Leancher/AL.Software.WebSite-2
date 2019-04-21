@@ -12,24 +12,24 @@ export default function RepairCar12() {
       крыла пришлось заменить вставкой из алюминия. Снимаем колесо, брызговик и подкрылок. Видим, как сгнила нижняя
       часть крыла.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar12-01.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar12-01.jpg" alt="pic" />
       <br />
       Отрезаем нижнюю часть крыла. Я отрезал немного ниже линии, где начинается фиолетовый цвет, оставив припуск на
       запчасть.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar12-02.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar12-02.jpg" alt="pic" />
       <br />
       Делаем шаблон из картона, затем переводим на лист алюминия. Стащил на работе кусок 1-мм алюминиевого листа :)
       Вырезаем, подгоняем по месту. Для закрепления используем вытяжные заклепки.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar12-03.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar12-03.jpg" alt="pic" />
       <br />
       После всех примерок красим. Для покраски использовал кислотный грунт для цветных металлов и обычный грунт под
       покраску.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar12-04.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar12-04.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar12-05.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar12-05.jpg" alt="pic" />
       <br />
       Сделано временно, но краска держится хорошо уже полгода.
     </React.Fragment>

@@ -10,7 +10,6 @@ export class Statistics extends React.Component {
   };
 
   statListProcess() {
-    console.log(this.state.listCountView);
     return this.state.listCountView
       .filter(item => {
         if (item.length === 1) return false;

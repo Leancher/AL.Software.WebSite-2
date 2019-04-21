@@ -14,7 +14,7 @@ export default function MyProjects1() {
       <br />
       Схема, плата и прошивка на <a href="https://github.com/Leancher/AL.Car.StartingEngine">GitHub</a>
       <br />
-      <img src="./Pictures/Content/Project01-01.jpg" alt="Project01-01.jpg" />
+      <img src="Pictures/Content/Project02-01.jpg" alt="Project02-01.jpg" />
     </React.Fragment>
   );
 }

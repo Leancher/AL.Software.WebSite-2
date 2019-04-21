@@ -24,10 +24,8 @@ export default function MyProjects3() {
       Исходный код приложения на <a href="https://github.com/Leancher/AL.Software.StartingEngine.AndApp">GitHub</a>
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/Project03-01.png' alt="Project03-01.png" />
-      ") &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img src='../" + Config.ContentPhotoFolder + "/Project03-02.png' alt="Project03-02.png" />
-      ")
+      <img src="Pictures/Content/Project01-01.png" alt="Project01-01.png" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="Pictures/Content/Project01-02.png" alt="Project01-02.png" />
     </React.Fragment>
   );
 }

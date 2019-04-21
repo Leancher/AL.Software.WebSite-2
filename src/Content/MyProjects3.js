@@ -23,7 +23,7 @@ export default function MyProjects2() {
       <br />
       Схема, плата и прошивка на <a href="https://github.com/Leancher/Al.Car.GeneralLock">GitHub</a>
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/Project02-01.jpg' alt="Project02-01.jpg" />"
+      <img src="Pictures/Content/Project03-01.jpg" alt="Project03-01.jpg" />"
     </React.Fragment>
   );
 }

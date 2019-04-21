@@ -10,21 +10,21 @@ export default function RepairCar7() {
       Решил избавиться от ржавых низов радикальным способов — отрезал нижнюю кромку и закрыл накладками от Матиза
       комплектации "Бест". Нашел комплект пластиковых накладок на разборке за 3 т. р.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar07-01.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar07-01.jpg" alt="pic" />
       <br />
       Как было сделано в прошлый год. Для качественного ремонта нужно отдавать машину в ремонт или снимать дверь и
       ремонтировать отдельно. Первое — дорого, второе — долго.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar07-02.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar07-02.jpg" alt="pic" />
       <br />
       Отрезал внешнюю часть примерно на 10 см, примерно на этом уровне сгнило. Внутри снизу и с боков на 2 см, т. е. все
       стыки, где как раз копится влага и начинает гнить со временем.
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar07-03.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar07-03.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar07-04.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar07-04.jpg" alt="pic" />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar07-05.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar07-05.jpg" alt="pic" />
       <br />
       Все покрасил краской по ржавчине и прикрепил рамку из алюминиевой полосы с помощью заклепок. Чтобы вода вытекала
       из дверей между нижней кромкой и алюминиевой полосой оставил промежуток 5 мм, подложив под заклепки гайки. Все

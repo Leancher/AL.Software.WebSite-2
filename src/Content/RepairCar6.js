@@ -9,7 +9,7 @@ export default function RepairCar5() {
       парковки (на схеме под цифрой 9).
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar05-01.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar05-01.jpg" alt="pic" />
       <br />
       Для доступа нужно снять короб воздушного фильтра, аккумулятор и полку аккумулятора, переводим рычаг АКПП в
       положении "L".
@@ -17,13 +17,13 @@ export default function RepairCar5() {
       Далее нужно выбить шплинт, который крепит кулису переключателя. Для этого хорошо подходит винт М4.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar05-02.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar05-02.jpg" alt="pic" />
       <br />
       Выбив шплинт, снимаем кулису и отводим в сторону. Отключаем разъем от переключателя. Выкручиваем два болта,
       крепящих переключатель.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar05-03.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar05-03.jpg" alt="pic" />
       <br />
       Переключатель может двигаться немного по оси, поэтому запоминаем положение (у меня были заводские метки желтого
       цвета).
@@ -32,12 +32,12 @@ export default function RepairCar5() {
       Чистим контакты, смазываем силиконовой смазкой.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar05-04.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar05-04.jpg" alt="pic" />
       <br />
       Собираем все обратно.
       <br />
       <br />
-      <img src='../" + Config.ContentPhotoFolder + "/RepairCar05-05.jpg' alt="pic" />
+      <img src="Pictures/Content/RepairCar05-05.jpg" alt="pic" />
     </React.Fragment>
   );
 }

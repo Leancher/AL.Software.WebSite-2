@@ -4,7 +4,6 @@
   --MyMiddleGrey: #828282;
   --MyLightGrey: #f6f6f6;
   --GlobalFont: Calibri;
-  --NavMenuWidth: 178px;
 }
 
 .container {
@@ -23,6 +22,10 @@
 }
 
 .HeaderTitle a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   font-family: var(--GlobalFont);
   font-weight: bold;
   font-size: 72px;
@@ -30,11 +33,16 @@
   text-decoration: none;
 }
 
+.HeaderTitle img {
+  display: inline-block;
+}
+
 .HeaderMenu {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+  padding-right: 18px;
 }
 
 .HeaderMenu a {
@@ -53,20 +61,20 @@
 }
 
 .ContentBlock {
-  display: inline-block;
   margin-top: 18px;
-  margin-right: 0px;
+  margin-bottom: 18px;
 }
 
 .ContentCaption {
-  display: block;
+  padding-right: 0px;
+  padding-left: 0px;
   text-align: center;
   font-family: var(--GlobalFont);
   font-weight: bold;
   font-size: 36px;
   background-color: var(--MyLightGrey);
-
   height: 54px;
+  width: 100%;
 }
 
 .ContentColumn {
@@ -136,18 +144,61 @@
 
 .CurrentPhoto {
   display: inline-block;
-  height: 73vh;
   margin: 0 auto;
   margin-top: 18px;
 }
 
+.no-gutters {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+/* Если меньше 1200 */
+@media (max-width: 1200px) {
+  .CurrentPhoto {
+    width: 100%;
+  }
+  .ContentBlock {
+    padding-left: 32px;
+    margin-left: 0px;
+  }
+  .MenuList a {
+    justify-content: flex-start;
+  }
+  .BtLeftPlace {
+    line-height: 50vh;
+  }
+  .BtRightPlace {
+    height: 40vh;
+  }
+}
+/* Если больше 1200 */
+@media (min-width: 1201px) {
+  .CurrentPhoto {
+    height: 68vh;
+  }
+  .ContentBlock {
+    margin-left: 0px;
+  }
+  .MenuList a {
+    justify-content: center;
+  }
+  .BtLeftPlace {
+    line-height: 60vh;
+  }
+  .BtRightPlace {
+    height: 50vh;
+  }
+}
+
 .MenuList {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .MenuList a {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
   padding-left: 18px;
   text-decoration: none;
@@ -173,25 +224,22 @@
   color: var(--MyDarkGrey);
 }
 
-.ButtonLeft {
+.BtPlace {
+  margin-top: 18px;
   width: 50px;
   display: inline-block;
-  line-height: 75vh;
-  padding-top: 55px;
 }
 
-.ButtonRigth {
-  width: 50px;
-  display: inline-block;
-  height: 75vh;
+.BtLeftPlace {
+  margin-right: 5px;
 }
 
-.BtClose {
-  margin-top: 5px;
+.BtRightPlace {
+  margin-left: 5px;
 }
 
 .BtNext {
-  height: calc(75vh - 55px);
+  height: 100%;
   display: flex;
 }
 

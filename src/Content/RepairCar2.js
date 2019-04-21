@@ -8,11 +8,11 @@ export default function RepairCar1() {
       затем рукой открыть дверь.
       <br />
       <br />
-      "<img src='../" + Config.ContentPhotoFolder + "/RepairCar01-01.jpg' alt="pic" />"
+      <img src="Pictures/Content/RepairCar01-01.jpg" alt="pic" />
       <br />
-      "<img src='../" + Config.ContentPhotoFolder + "/RepairCar01-02.jpg' alt="pic" />"
+      <img src="Pictures/Content/RepairCar01-02.jpg" alt="pic" />
       <br />
-      "<img src='../" + Config.ContentPhotoFolder + "/RepairCar01-03.jpg' alt="pic" />"
+      <img src="Pictures/Content/RepairCar01-03.jpg" alt="pic" />
     </React.Fragment>
   );
 }
