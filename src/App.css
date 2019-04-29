@@ -191,6 +191,26 @@
   }
 }
 
+/* Если меньше 576px */
+@media (max-width: 576px) {
+  .hideDropMenu {
+    display: block;
+  }
+  .hideMainMenu {
+    display: none;
+  }
+}
+
+/* Если больше 576px */
+@media (min-width: 576px) {
+  .hideDropMenu {
+    display: none;
+  }
+  .hideMainMenu {
+    display: block;
+  }
+}
+
 .MenuList {
   margin-left: 0px;
   margin-right: 0px;

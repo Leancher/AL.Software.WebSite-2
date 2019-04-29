@@ -1,7 +1,5 @@
 ﻿import React from 'react';
-import { config } from '../components/utilites';
 export default function HistCher1(props) {
-  const catName = props.catName;
   return (
     <React.Fragment>
       <h5 style={{ textAlign: 'center' }}>Е. Е. Шулятикова</h5>

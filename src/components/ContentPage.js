@@ -1,6 +1,6 @@
 import React from 'react';
 import { config, getCurrentCategory, parseQueryString } from './utilites';
-import { NavMenu } from './NavMenu';
+import { NormalMenu } from './NormalMenu';
 import { Header } from './Header';
 import { headTags } from './HeadTags';
 import { CurrentCategory } from './CurrentCategory';
@@ -8,6 +8,7 @@ import { PhotoViewer } from './PhotoViewer';
 import { Article } from './Article';
 import { MyNotes } from './MyNotes';
 import { Statistics } from './Statistics';
+import { CategoryCaption } from './CategoryCaption';
 const { name, caption, description, isPhotoAlbum, isTileGrid, isArticle } = config;
 
 export class ContentPage extends React.Component {
@@ -90,11 +91,17 @@ export class ContentPage extends React.Component {
     return (
       <React.Fragment>
         <Header catName={this.catName} />
-        <div class="row">
-          <NavMenu />
-          <div className="col-xl-12 col-lg-9 col-md-9 col-sm-9 col-9 ContentBlock">
-            <div class="row ">
-              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ContentCaption">{this.catCaption}</div>
+        <div className="row">
+          <div className="col-xl-12 col-lg-3 col-md-3 col-sm-3 col-3 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 MenuList hideMainMenu">
+            <div className="row">
+              <NormalMenu />
+            </div>
+          </div>
+          <div className="col-xl-12 col-lg-9 col-md-9 col-sm-9 ContentBlock">
+            <div className="row ">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ContentCaption">
+                <CategoryCaption catCaption={this.catCaption} />
+              </div>
               <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 no-gutters">{this.selectContent()}</div>
             </div>
           </div>

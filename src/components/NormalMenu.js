@@ -2,7 +2,7 @@ import React from 'react';
 import { config, buildLink, getCategoriesList } from './utilites';
 const { caption } = config;
 
-export class NavMenu extends React.Component {
+export class NormalMenu extends React.Component {
   state = {
     isLoading: false,
     categoriesList: []
@@ -28,11 +28,9 @@ export class NavMenu extends React.Component {
 
   render() {
     return (
-      <div className="col-xl-12 col-lg-3 col-md-3 col-sm-3 col-3 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 MenuList">
-        <div className="row">
-          {this.state.isLoading === false ? getCategoriesList(this.loadData, this.catNum) : this.renderMenuList()}
-        </div>
-      </div>
+      <React.Fragment>
+        {this.state.isLoading === false ? getCategoriesList(this.loadData, this.catNum) : this.renderMenuList()}
+      </React.Fragment>
     );
   }
 }
