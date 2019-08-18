@@ -22,16 +22,16 @@ export class CategoryCaption extends React.Component {
   renderCatCaption() {
     return (
       <React.Fragment>
-        <div class="row">
-          <div class="col-2">
-            <button class="btn hideDropMenu btnMenu" type="button" data-toggle="dropdown">
+        <div className="row">
+          <div className="col-2">
+            <button className="btn hideDropMenu btnMenu" type="button" data-toggle="dropdown">
               <img src="./Pictures/Util/menu.png" alt="menu" />
             </button>
-            <div class="dropdown-menu">
-              <div class="MenuList">{this.renderDropdownMenu()}</div>
+            <div className="dropdown-menu">
+              <div className="MenuList">{this.renderDropdownMenu()}</div>
             </div>
           </div>
-          <div class="col-10">{this.props.catCaption}</div>
+          <div className="col-10">{this.props.catCaption}</div>
         </div>
       </React.Fragment>
     );
